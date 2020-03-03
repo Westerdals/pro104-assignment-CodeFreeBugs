@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="EN">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="stylesheet" type="text/css" href="ourStyle.css">
+        <link rel="script" type="text/css" href="ourScript.js">
+
+    </head>
+    <body>
+    <h1>Webshop</h1>
+    <h2>Add new product</h2>
+    <form onsubmit="createNewProduct(event)">
+        <div>
+            <label>Name:
+               <div><input name ="name" placeholder="Name"></div>
+            </label>
+        </div>
+        <div>
+            <label>Price:
+                <div><input name ="price" placeholder="Price"></div>
+            </label>
+        </div>
+        
+        <div>
+            <label>Description:
+                <div><textarea name ="description" placeholder="description"></textarea></div>
+            </label>
+        </div>
+        
+        <div>
+            <input type="submit" placeholder="Submit">
+        </div>
+
+    </form>
+    <h2>Our products</h2>
+    <div id="productList"></div>
+    </body>
+</html>
+
