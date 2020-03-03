@@ -1,3 +1,4 @@
+//Komentar2
 function renderProductList(){
     const productList = JSON.parse(window.localStorage.getItem("productList")) || [];
     const productListEl = document.getElementById("productList");
