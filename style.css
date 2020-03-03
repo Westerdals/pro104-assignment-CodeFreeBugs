@@ -2,7 +2,6 @@
     margin: auto;
     width: 50%;
     height: 800px;
-    border: 1px white dotted; 
-    background-color: blue;
-
+    border: 1px rgb(148, 148, 148) dotted; 
+    background-color:rgb(148, 148, 148);
 }
