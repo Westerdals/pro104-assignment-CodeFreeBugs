@@ -39,4 +39,8 @@ window.addEventListener("storage",function(event){
     
 }
 
+<<<<<<< HEAD
 //hei 
+=======
+//hei akfaiegijaegijea
+>>>>>>> origin/master
