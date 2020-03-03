@@ -14,9 +14,6 @@
     innerText, onsubmit events
 */
 
-document.body.style.backgroundColor = "rgb(0,0,0)";
-
-
 // Create teamMember after filling inputFields and clicking submit
 document.getElementsByClassName('submit')[0].addEventListener('click', (Event) => {
     Event.preventDefault();
