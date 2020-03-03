@@ -1,7 +1,8 @@
 #main-container{
     margin: auto;
     width: 50%;
-    height: 800px;
+    min-height: 400px;
+    overflow: hidden;
     border: 1px rgb(148, 148, 148) dotted; 
     background-color:rgb(148, 148, 148);
 }
