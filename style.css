@@ -1,0 +1,8 @@
+#main-container{
+    margin: auto;
+    width: 50%;
+    height: 800px;
+    border: 1px white dotted; 
+    background-color: blue;
+
+}
