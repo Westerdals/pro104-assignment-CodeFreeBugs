@@ -18,6 +18,7 @@
 document.querySelectorAll('.submit')[0].addEventListener('click', (Event) => {
     Event.preventDefault();
     createTeamMember();
+    listTeamMembers();
     console.log('submit teamMember');
 });
 
@@ -43,19 +44,26 @@ function createTeamMember() {
     const lastName = document.querySelector('[name=lastName]').value;
     
     const teamMember = {firstName, lastName};
-    teamMemberList = JSON.parse(window.localStorage.getItem('teamMemberList')) ?? [];
-    teamMemberList.push(teamMember);
-    window.localStorage.setItem('teamMemberList', JSON.stringify(teamMemberList));
+    
+    const teamMemberList = JSON.parse(window.localStorage.getItem('teamMemberList')) ?? [];
 
-    teamMemberList.forEach(member => {
-        if (member.firstName == firstName)
-        {
-            return;
-        }
+    const memberSet = new Set();
+    
+    console.log(memberSet);
 
-        teamMemberList = JSON.parse(window.localStorage.getItem('teamMemberList')) ?? [];    
-    })
- 
+    memberSet.add(teamMember);
+
+    console.log(memberSet);
+
+    teamMemberList.push(memberSet);
+
+
+    window.localStorage.setItem('teamMemberList', JSON.stringify(teamMember));
+    //teamMemberList.push(teamMember);
+    //window.localStorage.setItem('teamMemberList', JSON.stringify(teamMemberList));
+
+    
+    
     return teamMember;
 }
 
@@ -112,13 +120,40 @@ const createTask = () => {
 // Get info from localStorage.
 // loop through and output to div.
 // Should it run on interval?
-function listTeamMembers() {
+const listTeamMembers = (registeredMember) => {
+    const teamMemberOutput = document.querySelector('#team-members-div');
+    const memberList = JSON.parse(window.localStorage.getItem("teamMemberList"));
 
+    // This can be moved into it's own functuon/be part of a factory function that generates HTML elements on page load
+    const memberOutputHeader = document.createElement('h2');
+    memberOutputHeader.className = 'header';
+    memberOutputHeader.textContent = 'Team medlemmer';
+    teamMemberOutput.prepend(memberOutputHeader);
+
+    for (const member of memberList) {
+        const memberElement = document.createElement('p');
+        memberElement.className = '.member';        
+        teamMemberOutput.append(memberElement);
+        
+        console.log(member);
+
+        
+
+        // if (registeredMember === member) {
+        //     console.log("clear");            
+        // }
+        // memberElement.innerHTML = `<p>${member.firstName} ${member.lastName}</p>`;
+        
+        
+    }
+
+    return memberList;
 }
 
 // List assignments/task
 // Get info from localStorage.
 // loop through and output to div.
+
 
 // Assign task to teammember
 // Remove task from page and put it under the "teamMember"?
