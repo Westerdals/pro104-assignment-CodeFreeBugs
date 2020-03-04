@@ -29,7 +29,6 @@ document.querySelectorAll('.submit')[1].addEventListener('click', (Event) => {
     console.log('submit new task');
 });
 
-
 //Create teammember
 // clik on button for creating new teamMemeber.
 // details: firstname, lastname, role.
@@ -40,27 +39,54 @@ document.querySelectorAll('.submit')[1].addEventListener('click', (Event) => {
 // Function that stores values from the inputFields into localStorage
 function createTeamMember() {
     //const teamMemberList = [];
+    const memberSet = new Set();
+
     const firstName = document.querySelector('[name=firstName]').value;
     const lastName = document.querySelector('[name=lastName]').value;
     
     const teamMember = {firstName, lastName};
-    
-    const teamMemberList = JSON.parse(window.localStorage.getItem('teamMemberList')) ?? [];
-
-    const memberSet = new Set();
-    
-    console.log(memberSet);
 
     memberSet.add(teamMember);
-
     console.log(memberSet);
 
-    teamMemberList.push(memberSet);
+    if (localStorage.length === 0) {
+        localStorage.setItem('teamMemberList', JSON.stringify([...memberSet]));
+    } else {
+        const teamMemberList = JSON.parse(localStorage.getItem('teamMemberList'));
+        console.log(teamMemberList);
+
+        
+
+        if (teamMember === localStorage.key)
+
+        teamMemberList.push(...memberSet);
+
+        console.log(...memberSet);
+
+        localStorage.setItem('teamMemberList', JSON.stringify(teamMemberList));
+    //console.log([...memberSet]);
+        
+        
+        
+        
+    }
+    
+    
+    
+    
+
+    //const teamMemberArray = Object.entries(teamMemberList).map(member => teamMemberList[member]);
+
+    
+    
+    
+    //teamMemberList.push(memberSet);
 
 
-    window.localStorage.setItem('teamMemberList', JSON.stringify(teamMember));
+    //localStorage.setItem('teamMemberList', JSON.stringify(teamMember));
+    
     //teamMemberList.push(teamMember);
-    //window.localStorage.setItem('teamMemberList', JSON.stringify(teamMemberList));
+    //localStorage.setItem('teamMemberList', JSON.stringify(teamMemberList));
 
     
     
@@ -112,7 +138,7 @@ const createTask = () => {
 
     inputFields.forEach(input => {
         taskArray.push(input.value);
-        window.localStorage.setItem("taskList", JSON.stringify(taskArray));
+        localStorage.setItem("taskList", JSON.stringify(taskArray));
     });
 }
 
@@ -122,7 +148,7 @@ const createTask = () => {
 // Should it run on interval?
 const listTeamMembers = (registeredMember) => {
     const teamMemberOutput = document.querySelector('#team-members-div');
-    const memberList = JSON.parse(window.localStorage.getItem("teamMemberList"));
+    const memberList = JSON.parse(localStorage.getItem("teamMemberList"));
 
     // This can be moved into it's own functuon/be part of a factory function that generates HTML elements on page load
     const memberOutputHeader = document.createElement('h2');
@@ -130,22 +156,22 @@ const listTeamMembers = (registeredMember) => {
     memberOutputHeader.textContent = 'Team medlemmer';
     teamMemberOutput.prepend(memberOutputHeader);
 
-    for (const member of memberList) {
-        const memberElement = document.createElement('p');
-        memberElement.className = '.member';        
-        teamMemberOutput.append(memberElement);
+    // for (const member of memberList) {
+    //     const memberElement = document.createElement('p');
+    //     memberElement.className = '.member';        
+    //     teamMemberOutput.append(memberElement);
         
-        console.log(member);
+    //     console.log(member);
 
         
 
-        // if (registeredMember === member) {
-        //     console.log("clear");            
-        // }
-        // memberElement.innerHTML = `<p>${member.firstName} ${member.lastName}</p>`;
+    //      if (registeredMember === member) {
+    //          console.log("clear");            
+    //      }
+    //      memberElement.innerHTML = `<p>${member.firstName} ${member.lastName}</p>`;
         
         
-    }
+    // }
 
     return memberList;
 }
@@ -168,7 +194,7 @@ const listTeamMembers = (registeredMember) => {
 
 
 // function renderProductList(){
-//     const productList = JSON.parse(window.localStorage.getItem("productList")) || [];
+//     const productList = JSON.parse(localStorage.getItem("productList")) || [];
 //     const productListEl = document.getElementById("productList");
 //     productListEl = "";
 //     for(const product of productList){
@@ -192,9 +218,9 @@ const listTeamMembers = (registeredMember) => {
 
     
 
-//     const productList = JSON-parse(window.localStorage.getItem("productList")) || [];
+//     const productList = JSON-parse(localStorage.getItem("productList")) || [];
 //     productList.push(product);
-//     window.localStorage.setItem("productList", JSON.stringify(productList));
+//     localStorage.setItem("productList", JSON.stringify(productList));
 //     renderProductList(); 
     
 //     event.target.reset(); 
