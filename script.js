@@ -15,14 +15,14 @@
 */
 
 // Create teamMember after filling inputFields and clicking submit
-document.getElementsByClassName('submit')[0].addEventListener('click', (Event) => {
+document.querySelectorAll('.submit')[0].addEventListener('click', (Event) => {
     Event.preventDefault();
     createTeamMember();
     console.log('submit teamMember');
 });
 
 // Create task after filling inputFields and clicking submit
-document.getElementsByClassName('submit')[1].addEventListener('click', (Event) => {
+document.querySelectorAll('.submit')[1].addEventListener('click', (Event) => {
     Event.preventDefault();
     createTask();
     console.log('submit new task');
@@ -36,61 +36,85 @@ document.getElementsByClassName('submit')[1].addEventListener('click', (Event) =
 // Must also be able to "hold onto tasks info"
 // Store info in localStorage.
 
-// Function that stores values from the 
-const createTeamMember = () => {
-    const firstName = document.querySelector("[name=firstName]").value;
-    const lastName = document.querySelector("[name=lastName]").value;
+// Function that stores values from the inputFields into localStorage
+function createTeamMember() {
+    //const teamMemberList = [];
+    const firstName = document.querySelector('[name=firstName]').value;
+    const lastName = document.querySelector('[name=lastName]').value;
     
     const teamMember = {firstName, lastName};
+    teamMemberList = JSON.parse(window.localStorage.getItem('teamMemberList')) ?? [];
+    teamMemberList.push(teamMember);
+    window.localStorage.setItem('teamMemberList', JSON.stringify(teamMemberList));
 
-    const teamMemberList = window.localStorage.setItem("teamMemberList", JSON.stringify(teamMember));    
+    teamMemberList.forEach(member => {
+        if (member.firstName == firstName)
+        {
+            return;
+        }
+
+        teamMemberList = JSON.parse(window.localStorage.getItem('teamMemberList')) ?? [];    
+    })
+ 
     return teamMember;
 }
+
+// This function is used to create and append inputFields for entering task-info
+// I'll generalize it later so it can be used for creating fields for other things etc.
+const createTaskInputFields = () => {
+    const taskInputField = document.querySelector('#register-task-div');
+
+    const inputFieldAttribute = 
+    {
+        name: ['name', 'description', 'startdate', 'enddate', 'deadline'],
+        placeholder: ['Enter taskname here', 'Enter description here'],
+        type: ['text', 'textarea', 'date', 'date', 'date']
+    };
+
+    const date = new Date();
+    const today = `${date.getFullYear()}-0${date.getMonth()+1}-0${date.getDay()+1}`;
+    const todayPlusOneYear = `${date.getFullYear()+1}-0${date.getMonth()+1}-0${date.getDay()+1}`;
+
+    for (let i = 0; i < inputFieldAttribute.name.length; i++) {
+        const inputField = document.createElement('input');
+        inputField.name = inputFieldAttribute.name[i];
+        inputField.type = inputFieldAttribute.type[i];
+        inputField.placeholder = inputFieldAttribute.placeholder[i];
+        inputField.className = 'input';
+        taskInputField.appendChild(inputField);
+
+        if (inputField.attributes.type.value === 'date') {
+            inputField.setAttribute('required', true);
+            inputField.setAttribute('min', today);
+            inputField.setAttribute('max', todayPlusOneYear);
+        }
+    }
+}
+
+createTaskInputFields();
 
 // Create assignment/task
 // Click on button for creating a new task.
 // fill input fields with info (se below)
 // Task involves: name, description, startdate, enddate, deadline
 // Store into localStorage
-
-const createTaskInputFields = () => {
-    const numOfFields = 5;
-    const taskInputField = document.querySelector('#register-task-div');
-
-    const inputFieldAttribute = 
-    {
-        name: ['name', 'description', 'startdate', 'enddate', 'deadline'],
-        type: ['text', 'textarea', 'date', 'date', 'date'],
-    }
-
-    for (let i = 0; i < numOfFields; i++)
-    {
-        const inputField = document.createElement('input');
-        inputField.name = inputFieldAttribute.name[i];
-        inputField.type = inputFieldAttribute.type[i];
-        inputField.className = 'input';
-        taskInputField.appendChild(inputField);
-    }
-
-    const inputFields = document.getElementsByClassName('input');
-    return inputFields;
-}
-
-
-
 const createTask = () => {
-    const taskInputFields = createTaskInputFields();
+    const inputFields = document.querySelectorAll('.input');
+    const taskArray = [];
 
-    const taskList = window.localStorage.setItem("taskList", JSON.stringify())
-    
+    inputFields.forEach(input => {
+        taskArray.push(input.value);
+        window.localStorage.setItem("taskList", JSON.stringify(taskArray));
+    });
 }
-
-
 
 // List members
 // Get info from localStorage.
 // loop through and output to div.
 // Should it run on interval?
+function listTeamMembers() {
+
+}
 
 // List assignments/task
 // Get info from localStorage.
