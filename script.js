@@ -40,8 +40,10 @@ const createTeamMember = () => {
     const lastName = document.querySelector('[name=lastName]').value;
     
     const teamMember = {firstName, lastName};
-    const teamMemberList = window.localStorage.setItem("teamMemberList", JSON.stringify(teamMember));
+    const teamMemberList = JSON.parse(window.localStorage.getItem('teamMemberList')) ?? [];
     teamMemberList.push(teamMember);
+
+    window.localStorage.setItem('teamMemberList', JSON.stringify(teamMemberList));
 }
 
 // Create assignment/task
