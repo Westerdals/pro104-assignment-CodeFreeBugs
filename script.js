@@ -14,21 +14,16 @@
     innerText, onsubmit events
 */
 
-document.body.style.backgroundColor = "rgb(0,0,0)";
-
-
 // Create teamMember after filling inputFields and clicking submit
-document.getElementsByClassName('submit')[0].addEventListener('click', (Event) => {
+document.querySelectorAll('.submit')[0].addEventListener('click', (Event) => {
     Event.preventDefault();
     createTeamMember();
-    console.log('submit teamMember');
 });
 
 // Create task after filling inputFields and clicking submit
-document.getElementsByClassName('submit')[1].addEventListener('click', (Event) => {
+document.querySelectorAll('.submit')[1].addEventListener('click', (Event) => {
     Event.preventDefault();
     createTask();
-    console.log('submit new task');
 });
 
 
@@ -39,15 +34,14 @@ document.getElementsByClassName('submit')[1].addEventListener('click', (Event) =
 // Must also be able to "hold onto tasks info"
 // Store info in localStorage.
 
-// Function that stores values from the 
+// Function that stores values from the inputFields into localStorage
 const createTeamMember = () => {
-    const firstName = document.querySelector("[name=firstName]").value;
-    const lastName = document.querySelector("[name=lastName]").value;
+    const firstName = document.querySelector('[name=firstName]').value;
+    const lastName = document.querySelector('[name=lastName]').value;
     
     const teamMember = {firstName, lastName};
-
-    const teamMemberList = window.localStorage.setItem("teamMemberList", JSON.stringify(teamMember));    
-    return teamMember;
+    const teamMemberList = window.localStorage.setItem("teamMemberList", JSON.stringify(teamMember));
+    teamMemberList.push(teamMember);
 }
 
 // Create assignment/task
@@ -57,38 +51,46 @@ const createTeamMember = () => {
 // Store into localStorage
 
 const createTaskInputFields = () => {
-    const numOfFields = 5;
     const taskInputField = document.querySelector('#register-task-div');
 
     const inputFieldAttribute = 
     {
         name: ['name', 'description', 'startdate', 'enddate', 'deadline'],
-        type: ['text', 'textarea', 'date', 'date', 'date'],
-    }
+        placeholder: ['Enter taskname here', 'Enter description here'],
+        type: ['text', 'textarea', 'date', 'date', 'date']
+    };
 
-    for (let i = 0; i < numOfFields; i++)
-    {
+    const date = new Date();
+    const today = `${date.getFullYear()}-0${date.getMonth()+1}-0${date.getDay()+1}`;
+    const todayPlusOneYear = `${date.getFullYear()+1}-0${date.getMonth()+1}-0${date.getDay()+1}`;
+
+    for (let i = 0; i < inputFieldAttribute.name.length; i++) {
         const inputField = document.createElement('input');
         inputField.name = inputFieldAttribute.name[i];
         inputField.type = inputFieldAttribute.type[i];
+        inputField.placeholder = inputFieldAttribute.placeholder[i];
         inputField.className = 'input';
         taskInputField.appendChild(inputField);
-    }
 
-    const inputFields = document.getElementsByClassName('input');
-    return inputFields;
+        if (inputField.attributes.type.value === 'date') {
+            inputField.setAttribute('required', true);
+            inputField.setAttribute('min', today);
+            inputField.setAttribute('max', todayPlusOneYear);
+        }
+    }
 }
 
-
+createTaskInputFields();
 
 const createTask = () => {
-    const taskInputFields = createTaskInputFields();
+    const inputFields = document.querySelectorAll('.input');
+    const taskArray = [];
 
-    const taskList = window.localStorage.setItem("taskList", JSON.stringify())
-    
+    inputFields.forEach(input => {
+        taskArray.push(input.value);
+        window.localStorage.setItem("taskList", JSON.stringify(taskArray));
+    });
 }
-
-
 
 // List members
 // Get info from localStorage.
@@ -109,7 +111,7 @@ const createTask = () => {
 // list all "cases"
 // List all cases with status?
 
-
+/* Old code */
 
 // function renderProductList(){
 //     const productList = JSON.parse(window.localStorage.getItem("productList")) || [];
