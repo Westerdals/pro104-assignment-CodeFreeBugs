@@ -5,18 +5,28 @@
         <title></title>
         <link rel="stylesheet" type="text/css" href="normalize.css">
         <link rel="stylesheet" type="text/css" href="style.css">
-        <link rel="script" type="text/css" href="script.js">
-        
     </head>
     <body>
         <div id="main-container">
-            <div><input name ="name" placeholder="Navn"></div>
-            <input type="submit" placeholder="Submit">
-            <div><input work ="work" placeholder="Arbeidsoppgave"></div>
-            <input type="submit" placeholder="Submit">
-            <div id="name-div">Navn</div>
+            <header id="main-header">
+                <h1>NET (Not-Enough-ToDo)</h1>
+                <h3>the ultimate task handler</h3>
+            </header>
+            <div id="register-team-member-div">
+                <h2>Register a new team member</h1>
+                <input name="firstName" placeholder="Enter your firstname">
+                <input name="lastName" placeholder="Enter your lastname">
+                <input class="submit" type="button" value="Register teammember">
+            </div>
+            <div id="register-task-div">
+                <h2>Register a new task</h1>
+                <input name="work" placeholder="Arbeidsoppgave">
+                <input class="submit" type="button" value="Add new task!">
+            </div>
+            <div id="team-members-div">Team medlemmer</div>
             <div id="tasks-div">Arbeidsoppgaver</div>
             <div id="current-task-div">Tildelt</div>
         </div>
+    <script src="script.js"></script>
     </body>
 </html>
