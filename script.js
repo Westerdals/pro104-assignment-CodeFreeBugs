@@ -38,32 +38,42 @@ document.querySelectorAll('.submit')[1].addEventListener('click', (Event) => {
 
 // Function that stores values from the inputFields into localStorage
 function createTeamMember() {
-    //const teamMemberList = [];
-    const memberSet = new Set();
-
+    const teamMemberList = JSON.parse(localStorage.getItem('teamMemberList')) ?? [];
     const firstName = document.querySelector('[name=firstName]').value;
     const lastName = document.querySelector('[name=lastName]').value;
+    const id = Math.floor(Math.random() * 100 + 1);
+    
+    //console.log(id);
     
     const teamMember = {firstName, lastName};
+    this.member = teamMember;
 
-    memberSet.add(teamMember);
-    console.log(memberSet);
+    console.log(teamMemberList.length);
 
     if (localStorage.length === 0) {
-        localStorage.setItem('teamMemberList', JSON.stringify([...memberSet]));
-    } else {
-        const teamMemberList = JSON.parse(localStorage.getItem('teamMemberList'));
-        console.log(teamMemberList);
-
-        
-
-        if (teamMember === localStorage.key)
-
-        teamMemberList.push(...memberSet);
-
-        console.log(...memberSet);
-
+        teamMemberList.push(teamMember);
         localStorage.setItem('teamMemberList', JSON.stringify(teamMemberList));
+        console.log(teamMemberList.length);
+    } else {
+        console.log(teamMemberList.length);
+
+        for (const member of teamMemberList) {
+            console.log(member);
+            
+        }
+
+        teamMemberList.push(teamMember);
+        const memberSet = new Set(teamMemberList);
+
+        console.log(memberSet);
+        
+        localStorage.setItem('teamMemberList', JSON.stringify([...memberSet]));
+        
+        //teamMemberList.push(...memberSet);
+
+        //console.log(...memberSet);
+
+        //localStorage.setItem('teamMemberList', JSON.stringify(teamMemberList));
     //console.log([...memberSet]);
         
         
