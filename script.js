@@ -43,7 +43,6 @@ window.addEventListener('storage', (Event) => {
 console.group('Storage event fired: ' + Event.type)
     console.log("StorageArea");
     console.table(Event.storageArea)
-    
     console.group("keys");
         console.log(`Key affected: ${Event.key}`);
     console.groupEnd();
