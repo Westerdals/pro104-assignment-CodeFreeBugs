@@ -46,7 +46,7 @@ function createTeamMember() {
         listTeamMembers();
     } else {
         alreadyRegistered(this.member, teamMemberList);
-        }
+    }
 
     if (!alreadyRegistered(this.member, teamMemberList)) {
         this.member.id = id;
@@ -88,8 +88,6 @@ const createTaskInputFields = () => {
     }
 }
 
-createTaskInputFields();
-
 // Create assignment/task
 // Click on button for creating a new task.
 // fill input fields with info (se below)
@@ -113,18 +111,15 @@ const listTeamMembers = () => {
     const memberList = JSON.parse(localStorage.getItem('teamMemberList'));
     const memberOutputHeader = document.querySelector('#team-members-header');
     const teamMemberList = JSON.parse(localStorage.getItem('teamMemberList'));
+    const teamMemberName = document.querySelector('[name=teamMemberName]').value;
 
-    for (const member of teamMemberList) {
-        console.log(member);
-        if (alreadyRegistered(member, teamMemberList))
-        {
+    for (const member of teamMemberList) {        
+        if (teamMemberName === member.name) {
             const memberItem = document.createElement('p');
             memberOutputHeader.append(memberItem);
             memberItem.textContent = member.name;
         }
     }
-    
-    return memberList;
 }
 
 // List assignments/task
@@ -163,7 +158,9 @@ function alreadyRegistered(entity, list) {
         }
     }
 }
+
 //IIFE (Imediatelly Inovked Function Expression, function that is invoked/runs before any other functions in the script)
 (function(){
+    createTaskInputFields();
     generateTeamMemberHeader();
 }());
