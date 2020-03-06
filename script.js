@@ -56,6 +56,11 @@ function createTeamMember() {
     }
 }
 
+<<<<<<< HEAD
+=======
+// This function is used to create and append inputFields for entering task-info
+// I'll generalize it later so it can be used for creating fields for other things etc.
+>>>>>>> commit before merge
 
 // Create assignment/task
 // Click on button for creating a new task.
@@ -82,8 +87,15 @@ const listTeamMembers = () => {
     const teamMemberList = JSON.parse(localStorage.getItem('teamMemberList'));
     const teamMemberName = document.querySelector('[name=teamMemberName]').value;
 
+<<<<<<< HEAD
     for (const member of teamMemberList) {        
         if (teamMemberName === member.name) {
+=======
+    for (const member of teamMemberList) {
+        console.log(member);
+        if (alreadyRegistered(member, teamMemberList))
+        {
+>>>>>>> commit before merge
             const memberItem = document.createElement('p');
             memberOutputHeader.append(memberItem);
             memberItem.textContent = member.name;
