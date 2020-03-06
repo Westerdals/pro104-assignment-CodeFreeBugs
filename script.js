@@ -165,8 +165,4 @@ function alreadyRegistered(entity, list) {
 (function(){
     createTaskInputFields();
     generateTeamMemberHeader();
-<<<<<<< HEAD
 }());
-=======
-}());
->>>>>>> v_Kirkfjell
