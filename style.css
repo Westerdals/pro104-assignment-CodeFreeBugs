@@ -31,3 +31,8 @@ body {
 div> input{
 display: block;
 }
+
+#team-members-header, #tasks-div, #current-task-div{
+    display: inline-block;
+    color: red;
+    }

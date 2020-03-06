@@ -130,6 +130,5 @@ function alreadyRegistered(entity, list) {
 
 //IIFE (Imediatelly Inovked Function Expression, function that is invoked/runs before any other functions in the script)
 (function(){
-    createTaskInputFields();
     generateTeamMemberHeader();
 }());
