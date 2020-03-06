@@ -1,0 +1,11 @@
+
+
+-- JavaScript --
+
+CreateTeamMember:
+-> Can input the same first,lastname multiple times which get's stored into localStorage.
+
+CreateTaskInputFields:
+-> Not bale to set "boundary", maybe by setting overflow/underflow range validity check to true?
+-> It works for selecting date with date-picker, but not when entering text manually...
+
