@@ -18,7 +18,6 @@
 document.querySelectorAll('.submit')[0].addEventListener('click', (Event) => {
     Event.preventDefault();
     createTeamMember();
-    listTeamMembers();
     console.log('submit teamMember');
 });
 
@@ -39,68 +38,26 @@ document.querySelectorAll('.submit')[1].addEventListener('click', (Event) => {
 // Function that stores values from the inputFields into localStorage
 function createTeamMember() {
     const teamMemberList = JSON.parse(localStorage.getItem('teamMemberList')) ?? [];
-    const firstName = document.querySelector('[name=firstName]').value;
-    const lastName = document.querySelector('[name=lastName]').value;
+    const name = document.querySelector('[name=teamMemberName]').value;
     const id = Math.floor(Math.random() * 100 + 1);
-    
-    //console.log(id);
-    
-    const teamMember = {firstName, lastName};
+
+    const teamMember = {name, id};
     this.member = teamMember;
 
-    console.log(teamMemberList.length);
-
-    if (localStorage.length === 0) {
+    if (localStorage.length < 1) {
         teamMemberList.push(teamMember);
         localStorage.setItem('teamMemberList', JSON.stringify(teamMemberList));
-        console.log(teamMemberList.length);
+        listTeamMembers();
     } else {
-        console.log(teamMemberList.length);
-
-        for (const member of teamMemberList) {
-            console.log(member);
-            
+        alreadyRegistered(this.member, teamMemberList);
         }
 
+    if (!alreadyRegistered(this.member, teamMemberList)) {
+        this.member.id = id;
         teamMemberList.push(teamMember);
-        const memberSet = new Set(teamMemberList);
-
-        console.log(memberSet);
-        
-        localStorage.setItem('teamMemberList', JSON.stringify([...memberSet]));
-        
-        //teamMemberList.push(...memberSet);
-
-        //console.log(...memberSet);
-
-        //localStorage.setItem('teamMemberList', JSON.stringify(teamMemberList));
-    //console.log([...memberSet]);
-        
-        
-        
-        
+        localStorage.setItem('teamMemberList', JSON.stringify(teamMemberList));
+        listTeamMembers();
     }
-    
-    
-    
-    
-
-    //const teamMemberArray = Object.entries(teamMemberList).map(member => teamMemberList[member]);
-
-    
-    
-    
-    //teamMemberList.push(memberSet);
-
-
-    //localStorage.setItem('teamMemberList', JSON.stringify(teamMember));
-    
-    //teamMemberList.push(teamMember);
-    //localStorage.setItem('teamMemberList', JSON.stringify(teamMemberList));
-
-    
-    
-    return teamMember;
 }
 
 // This function is used to create and append inputFields for entering task-info
@@ -156,33 +113,21 @@ const createTask = () => {
 // Get info from localStorage.
 // loop through and output to div.
 // Should it run on interval?
-const listTeamMembers = (registeredMember) => {
-    const teamMemberOutput = document.querySelector('#team-members-div');
-    const memberList = JSON.parse(localStorage.getItem("teamMemberList"));
+const listTeamMembers = () => {
+    const memberList = JSON.parse(localStorage.getItem('teamMemberList'));
+    const memberOutputHeader = document.querySelector('#team-members-header');
+    const teamMemberList = JSON.parse(localStorage.getItem('teamMemberList'));
 
-    // This can be moved into it's own functuon/be part of a factory function that generates HTML elements on page load
-    const memberOutputHeader = document.createElement('h2');
-    memberOutputHeader.className = 'header';
-    memberOutputHeader.textContent = 'Team medlemmer';
-    teamMemberOutput.prepend(memberOutputHeader);
-
-    // for (const member of memberList) {
-    //     const memberElement = document.createElement('p');
-    //     memberElement.className = '.member';        
-    //     teamMemberOutput.append(memberElement);
-        
-    //     console.log(member);
-
-        
-
-    //      if (registeredMember === member) {
-    //          console.log("clear");            
-    //      }
-    //      memberElement.innerHTML = `<p>${member.firstName} ${member.lastName}</p>`;
-        
-        
-    // }
-
+    for (const member of teamMemberList) {
+        console.log(member);
+        if (!alreadyRegistered(member, teamMemberList))
+        {
+            const memberItem = document.createElement('p');
+            memberOutputHeader.append(memberItem);
+            memberItem.textContent = member.name;
+        }
+    }
+    
     return memberList;
 }
 
@@ -201,7 +146,31 @@ const listTeamMembers = (registeredMember) => {
 // list all "cases"
 // List all cases with status?
 
+// Create HTML content on page load
 
+const generateTeamMemberHeader = () => {
+    const teamMemberOutput = document.querySelector('#team-members-div');
+    const memberOutputHeader = document.createElement('h2');
+    memberOutputHeader.id = 'team-members-header';
+    memberOutputHeader.className = 'header';
+    memberOutputHeader.textContent = 'Team medlemmer';
+    teamMemberOutput.prepend(memberOutputHeader);
+}
+
+function alreadyRegistered(entity, list) {
+    let alreadyRegistered = false;
+    for (const item of list) {
+        if (entity.name === item.name) {
+            console.error(`The member ${this.member.name} has already been registered`);
+            alreadyRegistered = true;
+            return alreadyRegistered;
+        }
+    }
+}
+//IIFE (Imediatelly Inovked Function Expression, function that is invoked/runs before any other functions in the script)
+(function(){
+    generateTeamMemberHeader();
+}());
 
 // function renderProductList(){
 //     const productList = JSON.parse(localStorage.getItem("productList")) || [];
@@ -242,4 +211,4 @@ const listTeamMembers = (registeredMember) => {
 //             renderProductList();
 //         }
     
-// });
+// })
