@@ -48,7 +48,7 @@ function createTeamMember() {
         alreadyRegistered(this.member, teamMemberList);
     }
 
-    if (!alreadyRegistered(this.member, teamMemberList)) {
+    if (localStorage.length > 0 && !alreadyRegistered(this.member, teamMemberList)) {
         this.member.id = id;
         teamMemberList.push(teamMember);
         localStorage.setItem('teamMemberList', JSON.stringify(teamMemberList));
