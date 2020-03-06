@@ -92,8 +92,6 @@ const createTaskInputFields = () => {
     }
 }
 
-createTaskInputFields();
-
 // Create assignment/task
 // Click on button for creating a new task.
 // fill input fields with info (se below)
@@ -119,7 +117,6 @@ const listTeamMembers = () => {
     const teamMemberList = JSON.parse(localStorage.getItem('teamMemberList'));
 
     for (const member of teamMemberList) {
-        console.log(member);
         if (!alreadyRegistered(member, teamMemberList))
         {
             const memberItem = document.createElement('p');
@@ -167,48 +164,9 @@ function alreadyRegistered(entity, list) {
         }
     }
 }
+
 //IIFE (Imediatelly Inovked Function Expression, function that is invoked/runs before any other functions in the script)
 (function(){
+    createTaskInputFields();
     generateTeamMemberHeader();
 }());
-
-// function renderProductList(){
-//     const productList = JSON.parse(localStorage.getItem("productList")) || [];
-//     const productListEl = document.getElementById("productList");
-//     productListEl = "";
-//     for(const product of productList){
-//         const productEl = document.createElement("div");
-//         const{name, price, description} = product;
-//         productEl.innerHTML = "<h4>" + name +"</h4>" +
-//             "<div>" + description + "</div>" +
-//             "<div><small>Price: "+ price + "</small></div>";
-//         productListEl.appendChild(productEl);
-
-//     }
-// }
-// function createNewProduct(event){
-//     event.preventDefault();
-
-//     const name = document.querySelector("[name='name']").value;
-//     const price = document.querySelector("[name='price']").value;
-//     const description = document.querySelector("[name='description']").value;
-
-//     const product = {name, price, description}; 
-
-    
-
-//     const productList = JSON-parse(localStorage.getItem("productList")) || [];
-//     productList.push(product);
-//     localStorage.setItem("productList", JSON.stringify(productList));
-//     renderProductList(); 
-    
-//     event.target.reset(); 
-
-
-// }
-// window.addEventListener("storage",function(event) {
-//         if(event.key === "productList"){
-//             renderProductList();
-//         }
-    
-// })
