@@ -167,15 +167,6 @@ const listAssignedTasks = () => {
     }
 }   
 
-// Create HTML content on page load
-const generateTeamMemberHeader = () => {
-    const teamMemberOutput = document.querySelector('#team-members-div');
-    const memberOutputHeader = document.createElement('h2');
-    memberOutputHeader.id = 'team-members-header';
-    memberOutputHeader.className = 'header';
-    memberOutputHeader.textContent = 'Team medlemmer';
-    teamMemberOutput.prepend(memberOutputHeader);
-}
 
 function alreadyRegistered(entity, list) {
     let alreadyRegistered = false;
@@ -187,8 +178,3 @@ function alreadyRegistered(entity, list) {
         }
     }
 }
-
-//IIFE (Imediatelly Inovked Function Expression, function that is invoked/runs before any other functions in the script)
-(function(){
-    generateTeamMemberHeader();
-}());

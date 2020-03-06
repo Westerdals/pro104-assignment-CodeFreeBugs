@@ -5,6 +5,14 @@
     box-sizing: border-box;
 }
 
+p{
+    font-size: 20px;
+}
+
+div{
+    margin-bottom: 15px;
+}
+
 html, body {
     width: 100vw;
     height: auto;
@@ -16,6 +24,7 @@ body {
 
 #main-container{
     margin: 2rem auto;
+    padding: 15px;
     width: 100rem;
     height: 50rem;
     border: 1px rgb(148, 148, 148) dashed;
@@ -28,11 +37,7 @@ body {
     height: auto;
 }
 
-div> input{
-display: block;
+#output-div > div{
+    display: inline-table;
+    margin-right: 20px;
 }
-
-#team-members-header, #tasks-div, #current-task-div{
-    display: inline-block;
-    color: red;
-    }
