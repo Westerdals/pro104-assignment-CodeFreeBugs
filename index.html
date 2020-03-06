@@ -9,7 +9,7 @@
     <body>
         <div id="main-container">
             <header id="main-header">
-                <h1>NET (Not-Enough-ToDo)</h1>
+                <h1>NET(Not-Enough-ToDo)</h1>
                 <h3>the ultimate task handler</h3>
             </header>
             <div id="register-team-member-div">
@@ -22,13 +22,17 @@
                 <input name="work" placeholder="Arbeidsoppgave">
                 <input class="submit" type="button" value="Add new task!">
             </div>
-            <br>
+            <div id ="assign-task-div">
+                <h2>Assign task to a team member</h2>
+                <input name="worker" placeholder="Tildel">
+                <input class="submit" type="button" value="Assign task to teammember">
+            </div>
             <div id="team-members-div"></div>
             <div id="tasks-div">
-                <h2>Arbeidsoppgaver</h2>
+                <h2 name="tasks">Arbeidsoppgaver</h2>
             </div>
             <div id="current-task-div">
-                <h2>Tildelte arbeidsoppgaver</h2>
+                <h2 name="assignedTasks">Tildelte arbeidsoppgaver</h2>
             </div>
         </div>
     <script src="script.js"></script>
