@@ -50,7 +50,7 @@ function createTeamMember() {
         listTeamMembers();
     } else {
         alreadyRegistered(this.member, teamMemberList);
-        }
+    }
 
     if (!alreadyRegistered(this.member, teamMemberList)) {
         this.member.id = id;
@@ -115,17 +115,15 @@ const listTeamMembers = () => {
     const memberList = JSON.parse(localStorage.getItem('teamMemberList'));
     const memberOutputHeader = document.querySelector('#team-members-header');
     const teamMemberList = JSON.parse(localStorage.getItem('teamMemberList'));
+    const teamMemberName = document.querySelector('[name=teamMemberName]').value;
 
-    for (const member of teamMemberList) {
-        if (!alreadyRegistered(member, teamMemberList))
-        {
+    for (const member of teamMemberList) {        
+        if (teamMemberName === member.name) {
             const memberItem = document.createElement('p');
             memberOutputHeader.append(memberItem);
             memberItem.textContent = member.name;
         }
     }
-    
-    return memberList;
 }
 
 // List assignments/task
