@@ -37,4 +37,4 @@ window.addEventListener("storage",function(event){
             renderProductList();
         }
     
-}
+})
