@@ -26,7 +26,6 @@ document.querySelectorAll('.submit')[1].addEventListener('click', (Event) => {
     createTask();
 });
 
-
 //Create teammember
 // clik on button for creating new teamMemeber.
 // details: firstname, lastname, role.
@@ -35,23 +34,32 @@ document.querySelectorAll('.submit')[1].addEventListener('click', (Event) => {
 // Store info in localStorage.
 
 // Function that stores values from the inputFields into localStorage
-const createTeamMember = () => {
-    const firstName = document.querySelector('[name=firstName]').value;
-    const lastName = document.querySelector('[name=lastName]').value;
-    
-    const teamMember = {firstName, lastName};
-    const teamMemberList = JSON.parse(window.localStorage.getItem('teamMemberList')) ?? [];
-    teamMemberList.push(teamMember);
+function createTeamMember() {
+    const teamMemberList = JSON.parse(localStorage.getItem('teamMemberList')) ?? [];
+    const name = document.querySelector('[name=teamMemberName]').value;
+    const id = Math.floor(Math.random() * 100 + 1);
 
-    window.localStorage.setItem('teamMemberList', JSON.stringify(teamMemberList));
+    const teamMember = {name, id};
+    this.member = teamMember;
+
+    if (localStorage.length < 1) {
+        teamMemberList.push(teamMember);
+        localStorage.setItem('teamMemberList', JSON.stringify(teamMemberList));
+        listTeamMembers();
+    } else {
+        alreadyRegistered(this.member, teamMemberList);
+        }
+
+    if (!alreadyRegistered(this.member, teamMemberList)) {
+        this.member.id = id;
+        teamMemberList.push(teamMember);
+        localStorage.setItem('teamMemberList', JSON.stringify(teamMemberList));
+        listTeamMembers();
+    }
 }
 
-// Create assignment/task
-// Click on button for creating a new task.
-// fill input fields with info (se below)
-// Task involves: name, description, startdate, enddate, deadline
-// Store into localStorage
-
+// This function is used to create and append inputFields for entering task-info
+// I'll generalize it later so it can be used for creating fields for other things etc.
 const createTaskInputFields = () => {
     const taskInputField = document.querySelector('#register-task-div');
 
@@ -84,13 +92,18 @@ const createTaskInputFields = () => {
 
 createTaskInputFields();
 
+// Create assignment/task
+// Click on button for creating a new task.
+// fill input fields with info (se below)
+// Task involves: name, description, startdate, enddate, deadline
+// Store into localStorage
 const createTask = () => {
     const inputFields = document.querySelectorAll('.input');
     const taskArray = [];
 
     inputFields.forEach(input => {
         taskArray.push(input.value);
-        window.localStorage.setItem("taskList", JSON.stringify(taskArray));
+        localStorage.setItem("taskList", JSON.stringify(taskArray));
     });
 }
 
@@ -98,10 +111,28 @@ const createTask = () => {
 // Get info from localStorage.
 // loop through and output to div.
 // Should it run on interval?
+const listTeamMembers = () => {
+    const memberList = JSON.parse(localStorage.getItem('teamMemberList'));
+    const memberOutputHeader = document.querySelector('#team-members-header');
+    const teamMemberList = JSON.parse(localStorage.getItem('teamMemberList'));
+
+    for (const member of teamMemberList) {
+        console.log(member);
+        if (!alreadyRegistered(member, teamMemberList))
+        {
+            const memberItem = document.createElement('p');
+            memberOutputHeader.append(memberItem);
+            memberItem.textContent = member.name;
+        }
+    }
+    
+    return memberList;
+}
 
 // List assignments/task
 // Get info from localStorage.
 // loop through and output to div.
+
 
 // Assign task to teammember
 // Remove task from page and put it under the "teamMember"?
@@ -113,45 +144,28 @@ const createTask = () => {
 // list all "cases"
 // List all cases with status?
 
-/* Old code */
+// Create HTML content on page load
 
-// function renderProductList(){
-//     const productList = JSON.parse(window.localStorage.getItem("productList")) || [];
-//     const productListEl = document.getElementById("productList");
-//     productListEl = "";
-//     for(const product of productList){
-//         const productEl = document.createElement("div");
-//         const{name, price, description} = product;
-//         productEl.innerHTML = "<h4>" + name +"</h4>" +
-//             "<div>" + description + "</div>" +
-//             "<div><small>Price: "+ price + "</small></div>";
-//         productListEl.appendChild(productEl);
+const generateTeamMemberHeader = () => {
+    const teamMemberOutput = document.querySelector('#team-members-div');
+    const memberOutputHeader = document.createElement('h2');
+    memberOutputHeader.id = 'team-members-header';
+    memberOutputHeader.className = 'header';
+    memberOutputHeader.textContent = 'Team medlemmer';
+    teamMemberOutput.prepend(memberOutputHeader);
+}
 
-//     }
-// }
-// function createNewProduct(event){
-//     event.preventDefault();
-
-//     const name = document.querySelector("[name='name']").value;
-//     const price = document.querySelector("[name='price']").value;
-//     const description = document.querySelector("[name='description']").value;
-
-//     const product = {name, price, description}; 
-
-    
-
-//     const productList = JSON-parse(window.localStorage.getItem("productList")) || [];
-//     productList.push(product);
-//     window.localStorage.setItem("productList", JSON.stringify(productList));
-//     renderProductList(); 
-    
-//     event.target.reset(); 
-
-
-// }
-// window.addEventListener("storage",function(event) {
-//         if(event.key === "productList"){
-//             renderProductList();
-//         }
-    
-// });
+function alreadyRegistered(entity, list) {
+    let alreadyRegistered = false;
+    for (const item of list) {
+        if (entity.name === item.name) {
+            console.error(`The member ${this.member.name} has already been registered`);
+            alreadyRegistered = true;
+            return alreadyRegistered;
+        }
+    }
+}
+//IIFE (Imediatelly Inovked Function Expression, function that is invoked/runs before any other functions in the script)
+(function(){
+    generateTeamMemberHeader();
+}());
