@@ -1,4 +1,3 @@
-
 /* 
     Description of the requirements:
     -------------------------------
@@ -7,7 +6,6 @@
     List all assignments and memebers from localStorage
     Give a teammember an assignment and store the "case/request" in localStorage
     List all "cases/requests" from localStorage
-
     Use these:
     localStorage.setItem, -getItem
     querySelector, getElementById, createElement, append
@@ -118,7 +116,7 @@ const listTeamMembers = () => {
 
     for (const member of teamMemberList) {
         console.log(member);
-        if (!alreadyRegistered(member, teamMemberList))
+        if (alreadyRegistered(member, teamMemberList))
         {
             const memberItem = document.createElement('p');
             memberOutputHeader.append(memberItem);
