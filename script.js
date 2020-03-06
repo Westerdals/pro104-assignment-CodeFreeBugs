@@ -56,37 +56,6 @@ function createTeamMember() {
     }
 }
 
-// This function is used to create and append inputFields for entering task-info
-// I'll generalize it later so it can be used for creating fields for other things etc.
-const createTaskInputFields = () => {
-    const taskInputField = document.querySelector('#register-task-div');
-
-    const inputFieldAttribute = 
-    {
-        name: ['name', 'description', 'startdate', 'enddate', 'deadline'],
-        placeholder: ['Enter taskname here', 'Enter description here'],
-        type: ['text', 'textarea', 'date', 'date', 'date']
-    };
-
-    const date = new Date();
-    const today = `${date.getFullYear()}-0${date.getMonth()+1}-0${date.getDay()+1}`;
-    const todayPlusOneYear = `${date.getFullYear()+1}-0${date.getMonth()+1}-0${date.getDay()+1}`;
-
-    for (let i = 0; i < inputFieldAttribute.name.length; i++) {
-        const inputField = document.createElement('input');
-        inputField.name = inputFieldAttribute.name[i];
-        inputField.type = inputFieldAttribute.type[i];
-        inputField.placeholder = inputFieldAttribute.placeholder[i];
-        inputField.className = 'input';
-        taskInputField.appendChild(inputField);
-
-        if (inputField.attributes.type.value === 'date') {
-            inputField.setAttribute('required', true);
-            inputField.setAttribute('min', today);
-            inputField.setAttribute('max', todayPlusOneYear);
-        }
-    }
-}
 
 // Create assignment/task
 // Click on button for creating a new task.
