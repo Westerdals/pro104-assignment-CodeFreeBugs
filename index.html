@@ -12,22 +12,26 @@
                 <h1>NET(Not-Enough-ToDo)</h1>
                 <h3>the ultimate task handler</h3>
             </header>
-            <div id="register-team-member-div">
-                <h2>Register a new team member</h1>
-                <input name="teamMemberName" placeholder="Enter your name (firstname and lastname)">
-                <input class="submit" type="button" value="Register teammember">
+            <form>
+                <div id="register-team-member-div">
+                    <h2>Register a new team member</h1>
+                    <input name="teamMemberName" placeholder="Enter your name (firstname and lastname)">
+                    <input class="submit" type="submit" value="Register teammember">
+                </div>
+                <div id="register-task-div">
+                    <h2>Register a new task</h1>
+                    <input name="work" placeholder="Arbeidsoppgave">
+                    <input class="submit" type="submit" value="Add new task!">
+                </div>
+                <div id ="assign-task-div">
+                    <h2>Assign task to a team member</h2>
+                    <input name="worker" placeholder="Tildel">
+                    <input class="submit" type="submit" value="Assign task to teammember">
+                </div>
+            </form>
+            <div id="team-members-div">
+                <h2 name="teamMembersHeader">Team medlemmer</h2>
             </div>
-            <div id="register-task-div">
-                <h2>Register a new task</h1>
-                <input name="work" placeholder="Arbeidsoppgave">
-                <input class="submit" type="button" value="Add new task!">
-            </div>
-            <div id ="assign-task-div">
-                <h2>Assign task to a team member</h2>
-                <input name="worker" placeholder="Tildel">
-                <input class="submit" type="button" value="Assign task to teammember">
-            </div>
-            <div id="team-members-div"></div>
             <div id="tasks-div">
                 <h2 name="tasks">Arbeidsoppgaver</h2>
             </div>
