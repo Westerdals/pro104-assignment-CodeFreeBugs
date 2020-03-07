@@ -14,19 +14,35 @@
 
 // Create teamMember after filling inputFields and clicking submit
 document.querySelectorAll('.submit')[0].addEventListener('click', (Event) => {
-    Event.preventDefault();
     createTeamMember();
 });
 
 // Create task after filling inputFields and clicking submit
 document.querySelectorAll('.submit')[1].addEventListener('click', (Event) => {
-    Event.preventDefault();
     createTask();
 });
 
 document.querySelectorAll('.submit')[2].addEventListener('click', (Event) => {
-    Event.preventDefault();
     assignTaskToTeamMember();
+});
+
+window.addEventListener('storage', (Event) => {
+console.group('Storage event fired: ' + Event.type)
+    console.log("StorageArea");
+    console.table(Event.storageArea)
+    
+    console.group("keys");
+        console.log(`Key affected: ${Event.key}`);
+    console.groupEnd();
+
+    console.group("values");
+        console.log("Old value(s) changed/deleted")
+        console.table(JSON.parse(Event.oldValue));
+        console.log("New value(s) added");
+        console.table(JSON.parse(Event.newValue));
+    console.groupEnd();
+
+console.groupEnd();    
 });
 
 //Create teammember
@@ -39,52 +55,16 @@ document.querySelectorAll('.submit')[2].addEventListener('click', (Event) => {
 // Function that stores values from the inputFields into localStorage
 function createTeamMember() {
     const teamMemberList = JSON.parse(localStorage.getItem('teamMemberList')) ?? [];
-    const name = document.querySelector('[name=teamMemberName]').value;
+    const memberName = document.querySelector('[name=teamMemberName]').value;
     const id = Math.floor(Math.random() * 100 + 1);
 
-    const teamMember = {name, id};
-    this.member = teamMember;
+    this.member = {memberName, id};
 
-    if (localStorage.length < 1) {
-        teamMemberList.push(teamMember);
-        localStorage.setItem('teamMemberList', JSON.stringify(teamMemberList));
-        listTeamMembers();
-    } else {
-        alreadyRegistered(this.member, teamMemberList);
-    }
-
-    if (localStorage.length > 0 && !alreadyRegistered(this.member, teamMemberList)) {
+    if (!alreadyRegistered(this.member, teamMemberList)) {
         this.member.id = id;
-        teamMemberList.push(teamMember);
+        teamMemberList.push(this.member);
         localStorage.setItem('teamMemberList', JSON.stringify(teamMemberList));
         listTeamMembers();
-    }
-}
-
-// Create assignment/task
-// Click on button for creating a new task.
-// fill input fields with info (se below)
-// Task involves: name, description, startdate, enddate, deadline
-// Store into localStorage
-function createTask() {
-    const name = document.querySelector('[name=work]').value;
-    const taskList = JSON.parse(localStorage.getItem('taskList')) ?? [];
-
-    const task = {name};
-    this.task = task;
-
-    if (localStorage.length < 1) {
-        taskList.push(task);
-        localStorage.setItem('taskList', JSON.stringify(taskList));
-        listTasks();
-    } else {
-        alreadyRegistered(this.task, taskList);
-    }
-
-    if (localStorage.length > 0 && !alreadyRegistered(this.task, taskList)) {
-        taskList.push(task);
-        localStorage.setItem('taskList', JSON.stringify(taskList));
-        listTasks();
     }
 }
 
@@ -94,17 +74,30 @@ function createTask() {
 // Should it run on interval?
 const listTeamMembers = () => {
     const memberOutputHeader = document.querySelector('#team-members-header');
-    const teamMemberList = JSON.parse(localStorage.getItem('teamMemberList'));
-    const teamMemberName = document.querySelector('[name=teamMemberName]').value;
+    const teamMemberList = fetchListFromLocalStorage(localStorage.teamMemberList);
 
     for (const member of teamMemberList) {
-        console.log(member);
-        if (alreadyRegistered(member, teamMemberList))
-        {
-            const memberItem = document.createElement('p');
-            memberOutputHeader.append(memberItem);
-            memberItem.textContent = member.name;
-        }
+        const memberItem = document.createElement('p');
+        memberOutputHeader.append(memberItem);
+        memberItem.textContent = member.memberName;
+    }
+}
+
+// Create assignment/task
+// Click on button for creating a new task.
+// fill input fields with info (se below)
+// Task involves: name, description, startdate, enddate, deadline
+// Store into localStorage
+function createTask() {
+    const taskName = document.querySelector('[name=work]').value;
+    const taskList = JSON.parse(localStorage.getItem('taskList')) ?? [];
+
+    this.task = {taskName};
+
+    if (!alreadyRegistered(this.task, taskList)) {
+        taskList.push(this.task);
+        localStorage.setItem('taskList', JSON.stringify(taskList));
+        listTasks();
     }
 }
 
@@ -113,15 +106,12 @@ const listTeamMembers = () => {
 // loop through and output to div.
 const listTasks = () => {
     const taskListHeader = document.querySelector('[name=tasks]');
-    const taskList = JSON.parse(localStorage.getItem('taskList'));
-    const taskName = document.querySelector('[name=work]').value;
+    const taskList = fetchListFromLocalStorage(undefined, localStorage.taskList, undefined);
 
-    for (const task of taskList) {
-        if (taskName === task.name) {
-            const taskItem = document.createElement('p');
-            taskListHeader.append(taskItem);
-            taskItem.textContent = task.name;
-        }
+    for (const task of taskList) {    
+        const taskItem = document.createElement('p');
+        taskListHeader.append(taskItem);
+        taskItem.textContent = task.taskName;
     }
 }
 
@@ -130,22 +120,20 @@ const listTasks = () => {
 // Make the teamMember "hold onto the task"
 function assignTaskToTeamMember() {
     const assignedTaskList = JSON.parse(localStorage.getItem('assignedTaskList')) ?? [];
-    const name = document.querySelector('[name=worker]').value;
-    const task = document.querySelector('[name=work]').value;
+    const owners = fetchListFromLocalStorage(localStorage.teamMemberList);
+    const tasks = fetchListFromLocalStorage(undefined, localStorage.taskList);
+    
+    for (let i = 0; i < owners.length; i++) {
+        const {memberName, id} = owners[i];
+        const {taskName} = tasks[i];
 
-    const assignedTask = {name, task};
-    this.assignedTask = assignedTask;
+        const assignment = `${taskName} has been assigned to ${memberName}`;
 
-    if (localStorage.length < 1) {
-        assignedTaskList.push(assignedTask);
-        localStorage.setItem('taskList', JSON.stringify(assignedTaskList));
-        listAssignedTasks();
-    } else {
-        alreadyRegistered(this.assignedTask, assignedTaskList);
+        this.assignedTask = {memberName, taskName, assignment};
     }
 
-    if (localStorage.length > 0 && !alreadyRegistered(this.assignedTask, assignedTaskList)) {
-        assignedTaskList.push(assignedTask);
+   if (!alreadyRegistered(this.assignedTask, assignedTaskList)) {
+        assignedTaskList.push(this.assignedTask);
         localStorage.setItem('assignedTaskList', JSON.stringify(assignedTaskList));
         listAssignedTasks();
     }
@@ -153,17 +141,12 @@ function assignTaskToTeamMember() {
 
 const listAssignedTasks = () => {
     const assignedTasksHeader = document.querySelector('[name=assignedTasks]');
-    const assignedTaskList = JSON.parse(localStorage.getItem('assignedTaskList'));
-    const assignedTaskName = document.querySelector('[name=work]').value;
-    const assignedTaskOwner = document.querySelector('[name=worker]').value;
+    const assignedTaskList = fetchListFromLocalStorage(undefined, undefined, localStorage.assignedTaskList); 
 
     for (const assignedTask of assignedTaskList) {
-        if (assignedTaskName === assignedTask.task) {
-            
-            const assignedTaskItem = document.createElement('p');
-            assignedTasksHeader.append(assignedTaskItem);
-            assignedTaskItem.textContent = assignedTask.task + " is assigned to " + assignedTaskOwner;
-        }
+        const assignedTaskItem = document.createElement('p');
+        assignedTasksHeader.append(assignedTaskItem);
+        assignedTaskItem.textContent = assignedTask.assignment;
     }
 }   
 
@@ -181,10 +164,35 @@ function alreadyRegistered(entity, list) {
     let alreadyRegistered = false;
     for (const item of list) {
         if (entity.name === item.name) {
-            console.error(`The member ${entity.name} has already been registered`);
+            console.warn(`${item.name} has already been registered`);
             alreadyRegistered = true;
             return alreadyRegistered;
         }
+    }
+    return alreadyRegistered;
+}
+
+function fetchListFromLocalStorage(memberList, taskList, assignedList) {
+    this.memberList = memberList;
+    this.taskList = taskList;
+    this.assignedList = assignedList;
+
+    if (this.memberList != undefined) {
+        return this.memberList = JSON.parse(localStorage.getItem('teamMemberList'));
+    } else {
+        console.warn(`${this.memberList} is undefined`);
+    }
+
+    if (this.taskList != undefined) {
+        return this.taskList = JSON.parse(localStorage.getItem('taskList'));
+    } else {
+        console.warn(`${this.taskList} is undefined`);
+    }
+
+    if (this.assignedList != undefined) {
+        return this.assignedList = JSON.parse(localStorage.getItem('assignedTaskList'));
+    } else {
+        console.warn(`${this.assignedList} is undefined`);
     }
 }
 
