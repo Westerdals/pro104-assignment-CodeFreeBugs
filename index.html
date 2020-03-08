@@ -12,18 +12,18 @@
                 <h1>NET(Not-Enough-ToDo)</h1>
                 <h3>the ultimate task handler</h3>
             </header>
-            
+
             <form onsubmit="createNewTeamMember(event)">
                 <h2>Register nytt medlem</h1>
-                <input name="fName" placeholder="Fornavn">
-                <input name="lName" placeholder="Etternavn">
+                <input name="fName" data-id="1" placeholder="Fornavn">
+                <input name="lName" data-id="1" placeholder="Etternavn">
                 <input type="submit" value="Legg til">
             </form>
 
             <form onsubmit="createNewTask(event)">
                 <h2>Register ny oppgave</h1>
-                <input name="task" placeholder="Arbeidsoppgave">
-                <input type="submit" value="Legg til oppgave">
+                <input name="task" data-id="1" placeholder="Arbeidsoppgave">
+                <input type="submit" data-id="1" value="Legg til oppgave">
             </form>
 
             <div id="assign-task-div">
