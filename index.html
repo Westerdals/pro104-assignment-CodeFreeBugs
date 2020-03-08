@@ -25,7 +25,10 @@
                 </div>
                 <div id ="assign-task-div">
                     <h2>Assign task to a team member</h2>
-                    <input name="worker" placeholder="Tildel">
+                    <input name="workers" list="workers" placeholder="List of members">
+                    <datalist id="workers"></datalist>
+                    <input name="tasks" list="tasks" placeholder="List of tasks">
+                    <datalist id="tasks"></datalist>
                     <input class="submit" type="submit" value="Assign task to teammember">
                 </div>
             </form>

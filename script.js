@@ -25,12 +25,19 @@ document.querySelectorAll('.submit')[1].addEventListener('click', (Event) => {
     createTask();
 });
 
+document.getElementById('assign-task-div').addEventListener('change', (Event) => {
+    
+});
+
 // Assign the created task to the created teamMember and clear/reset the inputFields
 document.querySelectorAll('.submit')[2].addEventListener('click', (Event) => {
     Event.preventDefault();
     assignTaskToTeamMember();
+    listAssignedTasks();
     document.forms[0].reset();
 });
+
+
 
 window.addEventListener('storage', (Event) => {
 console.group('Storage event fired: ' + Event.type)
@@ -72,10 +79,7 @@ function createTeamMember() {
     // It returns false if the "thing" is already in the "list", and returns true if it's not already in the list
     // We give this specific member 
 
-    const registered = alreadyRegistered(this.member, teamMemberList);
-
-    if (!registered) {
-        //this.member.id = id;
+    if (!alreadyRegistered(this.member, teamMemberList)) {
         teamMemberList.push(this.member);
         localStorage.setItem('teamMemberList', JSON.stringify(teamMemberList));
         listTeamMembers();
@@ -83,19 +87,24 @@ function createTeamMember() {
 }
 
 const listTeamMembers = () => {
-    const memberOutputHeader = document.querySelector('[name=teamMembersHeader]');
+    const memberOutputDiv = document.querySelector('#team-members-div');
     const teamMemberList = fetchListFromLocalStorage(localStorage.teamMemberList);
 
     for (const member of teamMemberList) {
         const memberItem = document.createElement('p');
-        memberOutputHeader.append(memberItem);
         memberItem.textContent = member.memberName;
+        memberOutputDiv.appendChild(memberItem);    
     }
 }
 
 function createTask() {
-    const taskName = document.querySelector('[name=work]').value;
     const taskList = JSON.parse(localStorage.getItem('taskList')) ?? [];
+    const taskName = document.querySelector('[name=work]').value;
+    
+    const workersDataList = document.querySelector('#workers');
+    const tasksDataList = document.querySelector('#tasks');
+    workersDataList.innerHTML = '';
+    tasksDataList.innerHTML = '';
 
     this.task = {taskName};
 
@@ -104,16 +113,27 @@ function createTask() {
         localStorage.setItem('taskList', JSON.stringify(taskList));
         listTasks();
     }
+
+    const owners = fetchListFromLocalStorage(localStorage.teamMemberList) ?? [];
+    const tasks = fetchListFromLocalStorage(undefined, localStorage.taskList) ?? [];
+
+    for (let i = 0; i < owners.length; i++) {
+        let {memberName} = owners[i];
+        let {taskName} = tasks[i];
+
+        workersDataList.innerHTML = `<option>${memberName}</option>`;
+        tasksDataList.innerHTML = `<option>${taskName}</option>`;
+    }
 }
 
 // List assignments/task
 const listTasks = () => {
-    const taskListHeader = document.querySelector('[name=tasks]');
+    const taskOutputDiv = document.querySelector('#tasks-div');
     const taskList = fetchListFromLocalStorage(undefined, localStorage.taskList, undefined);
 
     for (const task of taskList) {    
         const taskItem = document.createElement('p');
-        taskListHeader.append(taskItem);
+        taskOutputDiv.appendChild(taskItem);
         taskItem.textContent = task.taskName;
     }
 }
@@ -121,32 +141,26 @@ const listTasks = () => {
 // Assign task to teammember
 function assignTaskToTeamMember() {
     const assignedTaskList = JSON.parse(localStorage.getItem('assignedTaskList')) ?? [];
-    const owners = fetchListFromLocalStorage(localStorage.teamMemberList);
-    const tasks = fetchListFromLocalStorage(undefined, localStorage.taskList);
+    const memberName = document.querySelector('[name=workers]').list.textContent;
+    const taskName = document.querySelector('[name=tasks]').list.textContent;
     
-    for (let i = 0; i < owners.length; i++) {
-        const {memberName, id} = owners[i];
-        const {taskName} = tasks[i];
+    const assignment = `${taskName} has been assigned to ${memberName}`;
 
-        const assignment = `${taskName} has been assigned to ${memberName}`;
-
-        this.assignedTask = {memberName, id, taskName, assignment};
-    }
+    this.assignedTask = {memberName, taskName, assignment};
 
    if (!alreadyRegistered(this.assignedTask, assignedTaskList)) {
         assignedTaskList.push(this.assignedTask);
-        localStorage.setItem('assignedTaskList', JSON.stringify(assignedTaskList));
-        listAssignedTasks();
+        localStorage.setItem('assignedTaskList', JSON.stringify(assignedTaskList));        
     }
 }
 
 const listAssignedTasks = () => {
-    const assignedTasksHeader = document.querySelector('[name=assignedTasks]');
+    const assignedTasksOutputDiv = document.querySelector('#current-task-div');
     const assignedTaskList = fetchListFromLocalStorage(undefined, undefined, localStorage.assignedTaskList); 
 
     for (const assignedTask of assignedTaskList) {
         const assignedTaskItem = document.createElement('p');
-        assignedTasksHeader.append(assignedTaskItem);
+        assignedTasksOutputDiv.appendChild(assignedTaskItem);
         assignedTaskItem.textContent = assignedTask.assignment;
     }
 }
@@ -154,7 +168,19 @@ const listAssignedTasks = () => {
 function alreadyRegistered(entity, list) {
     let alreadyRegistered = false;
 
-    if (list === localStorage.teamMemberList) {
+    if (list.length < 1) {
+        alreadyRegistered = false;
+        return alreadyRegistered;
+    }
+
+    const teamList = fetchListFromLocalStorage(localStorage.teamMemberList) ?? [];
+    const taskList = fetchListFromLocalStorage(undefined,localStorage.taskList) ?? [];
+
+    const listProps = Object.getOwnPropertyNames(list);
+    const teamListProps = Object.getOwnPropertyNames(teamList);
+    const taskListProps = Object.getOwnPropertyNames(taskList);
+
+    if (listProps.length === teamListProps.length) {
         for (const item of list) {
             if (entity.memberName === item.memberName) {
                 console.warn(`${item.memberName} has already been registered`);
@@ -164,7 +190,7 @@ function alreadyRegistered(entity, list) {
         }
     }
 
-    if (list === localStorage.taskList) {
+    else if (listProps.length === taskListProps.length) {
         for (const item of list) {
             if (entity.taskName === item.taskName) {
                 console.warn(`${item.taskName} has already been registered`);
@@ -173,7 +199,7 @@ function alreadyRegistered(entity, list) {
             }
         }
     }
-    
+
     return alreadyRegistered;
 }
 
