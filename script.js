@@ -9,15 +9,12 @@
         // Ditto for <input name='lName' />
         const lName = document.querySelector("[name='lName']").value;
         
-       
-
         const teamMember = {fName, lName };
-    
-    
+        
         const teamMemberList = JSON.parse(window.localStorage.getItem("teamMemberList")) || [];
         // Adds the new product to the end of the list
         teamMemberList.push(teamMember);
-        window.localStorage.setItem("teamMember", JSON.stringify(teamMemberList));
+        window.localStorage.setItem("teamMemberList", JSON.stringify(teamMemberList));
         event.target.reset();
     
         
@@ -36,7 +33,7 @@
         const taskList = JSON.parse(window.localStorage.getItem("taskList")) || [];
         // Adds the new product to the end of the list
         taskList.push(task);
-        window.localStorage.setItem("task", JSON.stringify(taskArray));
+        window.localStorage.setItem("taskList", JSON.stringify(taskArray));
         event.target.reset();
     
         
