@@ -72,7 +72,9 @@ function createTeamMember() {
     // It returns false if the "thing" is already in the "list", and returns true if it's not already in the list
     // We give this specific member 
 
-    if (!alreadyRegistered(this.member, teamMemberList)) {
+    const registered = alreadyRegistered(this.member, teamMemberList);
+
+    if (!registered) {
         //this.member.id = id;
         teamMemberList.push(this.member);
         localStorage.setItem('teamMemberList', JSON.stringify(teamMemberList));
@@ -151,13 +153,27 @@ const listAssignedTasks = () => {
 
 function alreadyRegistered(entity, list) {
     let alreadyRegistered = false;
-    for (const item of list) {
-        if (entity.memberName === item.memberName || entity.taskName === item.taskName) {
-            console.warn(`${item.name} has already been registered`);
-            alreadyRegistered = true;
-            return alreadyRegistered;
+
+    if (list === localStorage.teamMemberList) {
+        for (const item of list) {
+            if (entity.memberName === item.memberName) {
+                console.warn(`${item.memberName} has already been registered`);
+                alreadyRegistered = true;
+                return alreadyRegistered;
+            }
         }
     }
+
+    if (list === localStorage.taskList) {
+        for (const item of list) {
+            if (entity.taskName === item.taskName) {
+                console.warn(`${item.taskName} has already been registered`);
+                alreadyRegistered = true;
+                return alreadyRegistered;
+            }
+        }
+    }
+    
     return alreadyRegistered;
 }
 
