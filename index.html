@@ -12,24 +12,29 @@
                 <h1>NET(Not-Enough-ToDo)</h1>
                 <h3>the ultimate task handler</h3>
             </header>
-            <div id="register-team-member-div">
-                <h2>Register a new team member</h1>
-                <input name="team-member-name" placeholder="Enter your name (firstname and lastname)">
-                <input class="submit" type="button" value="Register teammember">
-            </div>
-            <div id="register-task-div">
-                <h2>Register a new task</h1>
-                <input name="work" placeholder="Arbeidsoppgave">
-                <input class="submit" type="button" value="Add new task!">
-            </div>
+            
+            <form onsubmit="createNewTeamMember(event)">
+                <h2>Register nytt medlem</h1>
+                <input name="fName" placeholder="Fornavn">
+                <input name="lName" placeholder="Etternavn">
+                <input type="submit" value="Legg til">
+            </form>
+
+            <form onsubmit="createNewTask(event)">
+                <h2>Register ny oppgave</h1>
+                <input name="task" placeholder="Arbeidsoppgave">
+                <input type="submit" value="Legg til oppgave">
+            </form>
+
             <div id="assign-task-div">
                 <h2>Tildel arbeidsoppgaver</h2>
-                <input name="assing-teamember-input" value="team medlemmer">
+                <input name="assign-teamember-input" value="team medlemmer">
                 <input name="assign-task-input" value="Arbeidsoppgave">
-                <input class="submit" type="button" value="Add new task!">
+                <input class="submit" type="button" value="Tildel oppgave">
             </div>
-            <div id="team-members-div"></div>
+            <div id="team-members-div">
                 <h2>Team medlemmer</h2>
+            </div>
             <div id="tasks-div">
                 <h2>Arbeidsoppgaver</h2>
             </div>

@@ -1,29 +1,43 @@
-/* 
-    Description of the requirements:
-    -------------------------------
-    Create assignment and store in localStorage
-    Create teammember and store in localStorage
-    List all assignments and memebers from localStorage
-    Give a teammember an assignment and store the "case/request" in localStorage
-    List all "cases/requests" from localStorage
-    Use these:
-    localStorage.setItem, -getItem
-    querySelector, getElementById, createElement, append
-    innerText, onsubmit events
 
+    function createNewTeamMember(event) {
+        // Prevents browser for submitting page
+        event.preventDefault();
+     
+        // Finds <input name='fName'> [propertyName='propertyValue']
+        //   and gets the contents of the input field (value)
+        const fName = document.querySelector("[name='fName']").value;
+        // Ditto for <input name='lName' />
+        const lName = document.querySelector("[name='lName']").value;
+        
+       
 
-    Skriv i
+        const teamMember = {fName, lName };
+    
+    
+        const teamMemberList = JSON.parse(window.localStorage.getItem("teamMemberList")) || [];
+        // Adds the new product to the end of the list
+        teamMemberList.push(teamMember);
+        window.localStorage.setItem("teamMember", JSON.stringify(teamMemberList));
+        event.target.reset();
+    
+        
+    }
 
-*/
-
-// Create teamMember after filling inputFields and clicking submit
-document.querySelectorAll('.submit')[0].addEventListener('click', (Event) => {
-    Event.preventDefault();
-    createTeamMember();
-});
-
-// Create task after filling inputFields and clicking submit
-document.querySelectorAll('.submit')[1].addEventListener('click', (Event) => {
-    Event.preventDefault();
-    createTask();
-});
+    function createNewTask(event) {
+        // Prevents browser for submitting page
+        event.preventDefault();
+     
+        // Finds <input name='task'> [propertyName='propertyValue']
+        //   and gets the contents of the input field (value)
+        const task = document.querySelector("[name='task']").value;
+        const taskArray = {task};
+    
+    
+        const taskList = JSON.parse(window.localStorage.getItem("taskList")) || [];
+        // Adds the new product to the end of the list
+        taskList.push(task);
+        window.localStorage.setItem("task", JSON.stringify(taskArray));
+        event.target.reset();
+    
+        
+    }
