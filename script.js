@@ -89,11 +89,16 @@ function createTeamMember() {
 const listTeamMembers = () => {
     const memberOutputDiv = document.querySelector('#team-members-div');
     const teamMemberList = fetchListFromLocalStorage(localStorage.teamMemberList);
+    // Fetch the needed datalist (for choosing which teamMember should have which task)
+    const workersDataList = document.querySelector('#workers');
 
     for (const member of teamMemberList) {
         const memberItem = document.createElement('p');
+        const workerDataItem = document.createElement('option');
         memberItem.textContent = member.memberName;
-        memberOutputDiv.appendChild(memberItem);    
+        workerDataItem.textContent = `Name: ${member.memberName} - ID-number: ${member.id}`;
+        memberOutputDiv.appendChild(memberItem);
+        workersDataList.appendChild(workerDataItem);    
     }
 }
 
@@ -105,14 +110,6 @@ function createTask() {
     const taskList = JSON.parse(localStorage.getItem('taskList')) ?? [];
     // Store typed in task-value into variable
     const taskName = document.querySelector('[name=work]').value;
-    
-    // Fetch the needed datalist (for choosing which teamMember should have which task)
-    const workersDataList = document.querySelector('#workers');
-    const tasksDataList = document.querySelector('#tasks');
-
-    // Clear the list each time a new task i created
-    workersDataList.innerHTML = '';
-    tasksDataList.innerHTML = '';
 
     // Store typed in task-value into "this.object"-reference
     this.task = {taskName};
@@ -125,39 +122,28 @@ function createTask() {
         localStorage.setItem('taskList', JSON.stringify(taskList));
         listTasks();
     }
-
-    // Fetch list of teamMembers into "owners", and make it an empty array if the value is null or undefined
-    const owners = fetchListFromLocalStorage(localStorage.teamMemberList) ?? [];
-    // Fetch list of teamMembers into "tasks", and make it an empty array if the value is null or undefined
-    const tasks = fetchListFromLocalStorage(undefined, localStorage.taskList) ?? [];
-
-    // An "If-check" so ensure that the options in the datalist are not filled if owners or tasks is empty
-    if (owners.length > 0 && tasks.length > 0) {
-        for (let i = 0; i < owners.length; i++) {
-            // Deconstructing the list of owners and tasks into separate properties that gets added to options in the datalists
-            let {memberName} = owners[i];
-            let {taskName} = tasks[i];
-    
-            // These are the visible options in the datalist on the webpage
-            workersDataList.innerHTML = `<option>${memberName}</option>`;
-            tasksDataList.innerHTML = `<option>${taskName}</option>`;
-        }
-    }
 }
 
 // Function that list tasks entered in the input-field the exact same way as the "listTeamMembers"-function
 // TLDR: 
 // 1. Get div-element for displaying output
-// 2. fetch list of tasks from localStorage
-// 3. loop through the list and create "paragraph"-element for each that gets appended to the output-div
+// 2. Fetch list of tasks from localStorage
+// 3. Fetch the datalist-element for displaying assignment-options
+// 4. loop through the list and create "paragraph"-element for each that gets appended to the output-div
+// 5. loop through the list and create "option"-element for each that gets appended to the datalist-element
 const listTasks = () => {
     const taskOutputDiv = document.querySelector('#tasks-div');
     const taskList = fetchListFromLocalStorage(undefined, localStorage.taskList, undefined);
+    // Fetch the needed datalist (for choosing which teamMember should have which task)
+    const tasksDataList = document.querySelector('#tasks');
 
     for (const task of taskList) {    
         const taskItem = document.createElement('p');
+        const taskDataItem = document.createElement('option');
         taskOutputDiv.appendChild(taskItem);
+        tasksDataList.appendChild(taskDataItem);
         taskItem.textContent = task.taskName;
+        taskDataItem.textContent = task.taskName;
     }
 }
 
