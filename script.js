@@ -12,7 +12,6 @@
     innerText, onsubmit events
 */
 
-
 // Create teamMember after filling inputFields and clicking submit
 document.querySelectorAll('.submit')[0].addEventListener('click', (Event) => {
     // PreventDefault: default-action of a sbumit-button on a form is to send the form and refresh the webpage, we don't want that now
@@ -32,8 +31,6 @@ document.querySelectorAll('.submit')[2].addEventListener('click', (Event) => {
     // PreventDefault: default-action of a sbumit-button on a form is to send the form and refresh the webpage, we don't want that now
     Event.preventDefault();
     assignTaskToTeamMember();
-    listAssignedTasks();
-    document.forms[0].reset();
 });
 
 // Eventlistener for localStorage events that can be used when changing values in localStorage through another browser-window
@@ -157,10 +154,16 @@ function assignTaskToTeamMember() {
     const memberName = document.querySelector('[name=workers]').list.textContent;
     // Get the input-field above the "tasks"-datalist, and get the text from the list-value (the list is the datalist assosiated with the input... not confusing at all)
     const taskName = document.querySelector('[name=tasks]').list.textContent;
-    
+
+    // Returns to the function-caller if "teamMember" or "task" has not been created (therefore, empty values in the corresponding datalists)
+    // if true: return to function-caller/"do nothing"
+    // if false: continue downwards
+    if (memberName == "" || taskName == "") {
+        return;    
+    }
+
     // Store the "assignemnt"-result into variable that will be displayed as "the assignemnt"
     const assignment = `${taskName} has been assigned to ${memberName}`;
-
     // Store the details into "this.object"-reference
     this.assignedTask = {memberName, taskName, assignment};
 
@@ -169,7 +172,8 @@ function assignTaskToTeamMember() {
     // if true: Warn the user that the task has already been assigned to that member
    if (!alreadyRegistered(this.assignedTask, assignedTaskList)) {
         assignedTaskList.push(this.assignedTask);
-        localStorage.setItem('assignedTaskList', JSON.stringify(assignedTaskList));        
+        localStorage.setItem('assignedTaskList', JSON.stringify(assignedTaskList));
+        listAssignedTasks();        
     }
 }
 
@@ -187,6 +191,9 @@ const listAssignedTasks = () => {
         assignedTasksOutputDiv.appendChild(assignedTaskItem);
         assignedTaskItem.textContent = assignedTask.assignment;
     }
+
+    // Clear/reset values entered after an assignment has been listed
+    document.forms[0].reset();
 }
 
 // Function that takes in "a thing to check" and "a list that contains the other things of the same type"
