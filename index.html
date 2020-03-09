@@ -24,7 +24,16 @@
             </div>
             <div id ="assign-task-div">
                 <h2>Assign task to a team member</h2>
-                <input name="worker" placeholder="Tildel">
+                <!--<input name="worker" placeholder="Tildel">-->
+                
+                <label for="members-option">Choose member</label>
+                <select id="members-option" name="cars">
+                    <option value="none">No member selected</option>
+                </select>
+                <label for="task-option">Choose task</label>
+                <select id="task-option" name="cars">
+                    <option value="none">No task selected</option>
+                </select>
                 <input class="submit" type="button" value="Assign task to teammember">
             </div>
             <div id="output-div">
@@ -32,7 +41,7 @@
                     <h2 id="team-members-header">Team members</h2>
                 </div>
                 <div id="tasks-div">
-                    <h2 name="tasks">Arbeidsoppgaver</h2>
+                    <h2 id="tasks-header">Arbeidsoppgaver</h2>
                 </div>
                 <div id="current-task-div">
                     <h2 name="assignedTasks">Tildelte arbeidsoppgaver</h2>
