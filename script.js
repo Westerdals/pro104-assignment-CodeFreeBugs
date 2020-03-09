@@ -24,13 +24,19 @@ document.querySelectorAll('.submit')[0].addEventListener('click', (Event) => {
 // Create task after filling inputFields and clicking submit
 document.querySelectorAll('.submit')[1].addEventListener('click', (Event) => {
     Event.preventDefault();
-    createTask();
-    document.getElementsByName("work")[0].value = "";
+    if(document.getElementsByName("work")[0].value != ""){
+        createTask();
+        document.getElementsByName("work")[0].value = "";
+    }
 });
 
 document.querySelectorAll('.submit')[2].addEventListener('click', (Event) => {
     Event.preventDefault();
-    assignTaskToTeamMember();
+    if(document.querySelector('#members-option').value != "none" && document.querySelector('#task-option').value != "none"){
+        assignTaskToTeamMember();    
+        document.querySelector('#members-option').value = "none";
+        document.querySelector('#task-option').value = "none";
+    }
 });
 
 //Create teammember
@@ -61,7 +67,7 @@ function createTeamMember() {
     }
     var nameString = JSON.stringify(name);
     localStorage.setItem("members", nameString);
-    listTeamMembers();
+    listTeamMembers(JSON.parse(localStorage.getItem('members')).length -1);
 
     /*const teamMemberList = JSON.parse(localStorage.getItem('teamMemberList')) ?? [];
     const name = document.querySelector('[name=teamMemberName]').value;
@@ -103,7 +109,7 @@ function createTask() {
     }
     var nameString = JSON.stringify(name);
     localStorage.setItem("task", nameString);
-    listTasks();
+    listTasks(JSON.parse(localStorage.getItem('task')).length -1);
     
 
     /*const name = document.querySelector('[name=work]').value;
@@ -131,43 +137,46 @@ function createTask() {
 // Get info from localStorage.
 // loop through and output to div.
 // Should it run on interval?
-const listTeamMembers = () => {
-    const memberOutputHeader = document.querySelector('#team-members-header');
+listTeamMembers(0);
+function listTeamMembers(a) {
+    const memberOutputDiv = document.querySelector('#team-members-div');
     const memberOptionList = document.querySelector('#members-option');
     const teamMemberList = JSON.parse(localStorage.getItem('members'));
     const teamMemberName = document.querySelector('[name=teamMemberName]').value;
 
-            const memberItem = document.createElement('p');
-            memberOutputHeader.append(memberItem);
-            memberItem.textContent = teamMemberList[teamMemberList.length - 1];
+    for(var i = a; i < teamMemberList.length; i++){
+        const memberItem = document.createElement('p');
+        memberOutputDiv.append(memberItem);
+        memberItem.textContent = teamMemberList[i];
 
-            const memberOpt = document.createElement('option');
-            memberOptionList.append(memberOpt);
-            memberOpt.setAttribute("value", teamMemberList[teamMemberList.length - 1]);
-            memberOpt.textContent = teamMemberList[teamMemberList.length - 1];
-        
+        const memberOpt = document.createElement('option');
+        memberOptionList.append(memberOpt);
+        memberOpt.setAttribute("value", teamMemberList[i]);
+        memberOpt.textContent = teamMemberList[i];
+    }
     
 }
 
 // List assignments/task
 // Get info from localStorage.
 // loop through and output to div.
-const listTasks = () => {
-    const taskListHeader = document.querySelector('#tasks-header');
+listTasks(0);
+function listTasks(a) {
+    const taskListDiv = document.querySelector('#tasks-div');
     const taskOptionList = document.querySelector('#task-option');
     const taskList = JSON.parse(localStorage.getItem('task'));
     const taskName = document.querySelector('[name=work]').value;
 
-    
-            const taskItem = document.createElement('p');
-            taskListHeader.append(taskItem);
-            taskItem.textContent = taskList[taskList.length - 1];
+    for(var i = a; i < taskList.length; i++){
+        const taskItem = document.createElement('p');
+        taskListDiv.append(taskItem);
+        taskItem.textContent = taskList[i];
 
-            const taskOpt = document.createElement('option');
-            taskOptionList.append(taskOpt);
-            taskOpt.setAttribute("value", taskList[taskList.length - 1]);
-            taskOpt.textContent = taskList[taskList.length - 1];
-        
+        const taskOpt = document.createElement('option');
+        taskOptionList.append(taskOpt);
+        taskOpt.setAttribute("value", taskList[i]);
+        taskOpt.textContent = taskList[i];
+    }
     
 }
 
@@ -175,28 +184,19 @@ const listTasks = () => {
 // Remove task from page and put it under the "teamMember"?
 // Make the teamMember "hold onto the task"
 function assignTaskToTeamMember() {
-    console.log(document.querySelector('#members-option').value);
-    console.log(document.querySelector('#task-option').value);
 
-   var name;
-    var taskMember;
-    if(localStorage.getItem("task-member") == null){
-        taskMember = {
-            member: document.querySelector('#members-option').value, 
-            task: document.querySelector('#task-option').value
-        };
-        name.push(taskMember);
+    var memberTask;
+    if(localStorage.getItem("memberTask") == null){
+        memberTask = [`${document.querySelector('#members-option').value} skal ${document.querySelector('#task-option').value}`];
     }else{
-        name = JSON.parse(localStorage.getItem("task-member"));
-        taskMember = {
-            member: document.querySelector('#members-option').value, 
-            task: document.querySelector('#task-option').value
-        };
-        name.push(taskMember);
-        localStorage.removeItem("member-task");
+        memberTask = JSON.parse(localStorage.getItem("memberTask"));
+        memberTask.push([`${document.querySelector('#members-option').value} skal ${document.querySelector('#task-option').value}`]);
+        localStorage.removeItem("nameTask");
     }
-    var nameString = JSON.stringify(name);
-    localStorage.setItem("member-task", nameString);
+    var memberTaskString = JSON.stringify(memberTask);
+    localStorage.setItem("memberTask", memberTaskString);
+
+    listAssignedTasks(JSON.parse(localStorage.getItem('memberTask')).length -1);
 }
 
     /*const assignedTaskList = JSON.parse(localStorage.getItem('assignedTaskList')) ?? [];
@@ -221,19 +221,15 @@ function assignTaskToTeamMember() {
     }
 }*/
 
-const listAssignedTasks = () => {
-    const assignedTasksHeader = document.querySelector('[name=assignedTasks]');
-    const assignedTaskList = JSON.parse(localStorage.getItem('assignedTaskList'));
-    const assignedTaskName = document.querySelector('[name=work]').value;
-    const assignedTaskOwner = document.querySelector('[name=worker]').value;
+listAssignedTasks(0);
+function listAssignedTasks(a) {
+    const assignedTasksDiv = document.querySelector('#current-task-div');
+    const assignedTaskList = JSON.parse(localStorage.getItem('memberTask'));
 
-    for (const assignedTask of assignedTaskList) {
-        if (assignedTaskName === assignedTask.task) {
-            
-            const assignedTaskItem = document.createElement('p');
-            assignedTasksHeader.append(assignedTaskItem);
-            assignedTaskItem.textContent = assignedTask.task + " is assigned to " + assignedTaskOwner;
-        }
+    for(var i = a; i < assignedTaskList.length; i++){
+        const taskItem = document.createElement('p');
+        assignedTasksDiv.append(taskItem);
+        taskItem.textContent = assignedTaskList[i];
     }
 }   
 
