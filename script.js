@@ -26,12 +26,25 @@ document.querySelectorAll('.submit')[1].addEventListener('click', (Event) => {
     createTask();
 });
 
-// Assign the created task to the created teamMember, list the assignment on the webpage and clear/reset the inputFields
-document.querySelectorAll('.submit')[2].addEventListener('click', (Event) => {
-    // PreventDefault: default-action of a sbumit-button on a form is to send the form and refresh the webpage, we don't want that now
-    Event.preventDefault();
-    assignTaskToTeamMember();
+document.querySelector('#assign-task-div').addEventListener('change', function(Event) {
+    
+    // if (Event.target.name === 'workers') {
+    //     member = Event.target.value;
+    // }
+
+    // if (Event.target.name === 'tasks') {
+    //     task = Event.target.value;            
+    // }
+
+    assignTaskToTeamMember(member, task);
 });
+
+    // Assign the created task to the created teamMember, list the assignment on the webpage and clear/reset the inputFields
+    document.querySelectorAll('.submit')[2].addEventListener('click', (Event) => {
+        // PreventDefault: default-action of a sbumit-button on a form is to send the form and refresh the webpage, we don't want that now
+        Event.preventDefault();
+        listAssignedTasks();
+    });
 
 // Eventlistener for localStorage events that can be used when changing values in localStorage through another browser-window
 // NB: LocalStorage events get triggered on the "main browser-window" when something changes the values from "another browser-window"
@@ -90,12 +103,17 @@ const listTeamMembers = () => {
     const workersDataList = document.querySelector('#workers');
 
     for (const member of teamMemberList) {
-        const memberItem = document.createElement('p');
-        const workerDataItem = document.createElement('option');
-        memberItem.textContent = member.memberName;
-        workerDataItem.textContent = `Name: ${member.memberName} - ID-number: ${member.id}`;
-        memberOutputDiv.appendChild(memberItem);
-        workersDataList.appendChild(workerDataItem);    
+        // Check if "this particular member's ID-number" is the same as the "ID-number of the iterated member from the list"
+        // If true: create details in datalist and output list of teamMembers
+        // If false: continue iterating the list
+        if (this.member.id === member.id) {
+            const memberItem = document.createElement('p');
+            const workerDataItem = document.createElement('option');
+            memberItem.textContent = this.member.memberName;
+            workerDataItem.value = `Name: ${this.member.memberName} - ID-number: ${this.member.id}`;
+            memberOutputDiv.appendChild(memberItem);
+            workersDataList.appendChild(workerDataItem);
+        }   
     }
 }
 
@@ -134,38 +152,51 @@ const listTasks = () => {
     // Fetch the needed datalist (for choosing which teamMember should have which task)
     const tasksDataList = document.querySelector('#tasks');
 
-    for (const task of taskList) {    
-        const taskItem = document.createElement('p');
-        const taskDataItem = document.createElement('option');
-        taskOutputDiv.appendChild(taskItem);
-        tasksDataList.appendChild(taskDataItem);
-        taskItem.textContent = task.taskName;
-        taskDataItem.textContent = task.taskName;
+    for (const task of taskList) {
+        // Check if "this particular tasks' name" is the same as the "taskName of the iterated task from the list"
+        // If true: create details in datalist and output list of tasks
+        // If false: continue iterating the list
+        if (this.task.taskName === task.taskName) {
+            const taskItem = document.createElement('p');
+            const taskDataItem = document.createElement('option');
+            taskOutputDiv.appendChild(taskItem);
+            tasksDataList.appendChild(taskDataItem);
+            taskItem.textContent = this.task.taskName;
+            taskDataItem.value = this.task.taskName;
+        }
     }
 }
 
 // Function that get the text values from the choosen options, and stores the details in "assignedTaskList"-key in localStorage
-function assignTaskToTeamMember() {
+function assignTaskToTeamMember(member, task) {
     // Stores javaScript objects parsed from JSON.string if the "assignedTaskList"-exists in localStorage (true) or returns and empty array (false)
     // Do you remember the rule with null coalescing operator?: "tries option on the left-side, if null or undefined -> chooses option on the right-side"
     const assignedTaskList = JSON.parse(localStorage.getItem('assignedTaskList')) ?? [];
 
     // Get the input-field above the "workers"-datalist, and get the text from the list-value (the list is the datalist assosiated with the input... not confusing at all)
-    const memberName = document.querySelector('[name=workers]').list.textContent;
-    // Get the input-field above the "tasks"-datalist, and get the text from the list-value (the list is the datalist assosiated with the input... not confusing at all)
-    const taskName = document.querySelector('[name=tasks]').list.textContent;
+
+    console.log(member);
+    console.log(task);
+    
+
+    
+        // Get the input-field above the "tasks"-datalist, and get the text from the list-value (the list is the datalist assosiated with the input... not confusing at all)
+        //const taskName = document.querySelector('[name=tasks]').list.options;
+        
+    
 
     // Returns to the function-caller if "teamMember" or "task" has not been created (therefore, empty values in the corresponding datalists)
     // if true: return to function-caller/"do nothing"
     // if false: continue downwards
-    if (memberName == "" || taskName == "") {
-        return;    
-    }
+    //if (memberName === "" || taskName === "") {
+    //    return;    
+    //}
 
     // Store the "assignemnt"-result into variable that will be displayed as "the assignemnt"
-    const assignment = `${taskName} has been assigned to ${memberName}`;
+    //const assignment = `${taskName} has been assigned to ${memberName}`;
+    
     // Store the details into "this.object"-reference
-    this.assignedTask = {memberName, taskName, assignment};
+    //this.assignedTask = {memberName, taskName};
 
     // Check if the assignment has already been registered
     // if false: add "this specific assigned task" to localStorage
@@ -187,9 +218,17 @@ const listAssignedTasks = () => {
 
     // Iterate through list of assignedTask from localStorage, generate paragraph for each and append to "output-div"
     for (const assignedTask of assignedTaskList) {
-        const assignedTaskItem = document.createElement('p');
-        assignedTasksOutputDiv.appendChild(assignedTaskItem);
-        assignedTaskItem.textContent = assignedTask.assignment;
+        // Check if "this particular tasks' name" is the same as the "taskName of the iterated task from the list"
+        // If true: create details in datalist and output list of tasks
+        // If false: continue iterating the list
+
+        console.log(this.assignedTask.assignment);
+
+        if (this.assignedTask.assignment === assignedTask.assignment) {
+            const assignedTaskItem = document.createElement('p');
+            assignedTasksOutputDiv.appendChild(assignedTaskItem);
+            assignedTaskItem.textContent = this.assignedTask.assignment;
+        }
     }
 
     // Clear/reset values entered after an assignment has been listed
