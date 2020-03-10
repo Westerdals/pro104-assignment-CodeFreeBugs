@@ -92,7 +92,7 @@ function listTeamMembers(a) {
     const memberOutputDiv = document.querySelector('#team-members-div');
     const memberOptionList = document.querySelector('#members-option');
     const teamMemberList = JSON.parse(localStorage.getItem('members'));
-    const teamMemberName = document.querySelector('[name=teamMemberName]').value;
+
 
     if(teamMemberList != null){
         for(var i = a; i < teamMemberList.length; i++){
@@ -163,64 +163,6 @@ function listAssignedTasks(a) {
             const taskItem = document.createElement('p');
             assignedTasksDiv.append(taskItem);
             taskItem.textContent = assignedTaskList[i];
-        }
-    }
-}   
-
-
-// Function that takes in "a thing to check" and "a list that contains the other things of the same type"
-// i.e: Takes in "this.member" and "teamMemberList"
-function alreadyRegistered(entity, list) {
-    // If the "list with things to check" is empty, then the "thing" shouldn't be registered alredy
-    // We then return "false" to the place where the function was called (i.e: inside createTeamMember)
-    if (list.length < 1) {
-        return false;
-    }
-
-    // Fetch the list(s) with teamMembers and tasks from localStorage
-    // We need to do this since the "list of things"-values and "the thing"-values will not be compared as expected
-    const teamList = fetchListFromLocalStorage(localStorage.teamMemberList) ?? [];
-    const taskList = fetchListFromLocalStorage(undefined,localStorage.taskList) ?? [];
-
-    // NB: This is done to make the "list of things" recognize "who it is" (more details later)
-    // The properties of the list(s) are stored into separate arrays (i.e: [0, 1, length]) 
-    const listProps = Object.getOwnPropertyNames(list);
-    const teamListProps = Object.getOwnPropertyNames(teamList);
-    const taskListProps = Object.getOwnPropertyNames(taskList);
-
-
-    // NB: I had to make an If-check for values in the "teamMemberList" and "taskList", since the property-names (i.e: .memberName and .taskName) -
-    // wouldn't work as expected in the "assignTeamMemberToTask"-function if they where the same 
-    // (the assignment description wouldn't differentiate between name of the teamMember and name of the task, and lead to stuff like this: bob has been assigned to bob, or bob has been assigned to make a task).
-
-    // Check if the number of properties on the "list of things" match the number of properties on the "teamList" (make the list recognize that it is the "teamlist")
-    // This works since the "teamListProps.length" is 0 if it's not supplied as an argument in the function-call
-    if (listProps.length === teamListProps.length) {
-        // iterate through the "list of things" supplied as argument on function-call
-        for (const item of list) {
-            // check if the "thing supplied as argument" has the same name as an entry in the "list of things"
-            // if true: output warning and return "true" to the function-caller
-            // if false: run next iteration or continue after the loop
-            if (entity.memberName === item.memberName) {
-                // Outputs warning that the "thing" has already been registered
-                console.warn(`${item.memberName} has already been registered`);
-                return true;
-            }
-        }
-    }
-
-    // Check if the number of properties on the "list of things" match the number of properties on the "taskList", if the "teamMemberList" isn't supplied.
-    else if (listProps.length === taskListProps.length) {
-        // Iterates through the "list of things"
-        for (const item of list) {
-            // Check name of the supplied task against task already in localStorage
-            // if true: output warning and return "true" to the function-caller
-            // if false: run next iteration or continue after the loop
-            if (entity.taskName === item.taskName) {
-                // Outputs warning that the "thing" has already been registered
-                console.warn(`${item.taskName} has already been registered`);
-                return true;
-            }
         }
     }
 }
