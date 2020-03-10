@@ -3,39 +3,51 @@
     <head>
         <meta charset="utf-8">
         <title></title>
-        <link rel="stylesheet" type="text/css" href="ourStyle.css">
-        <link rel="script" type="text/css" href="ourScript.js">
-
+        <link rel="stylesheet" type="text/css" href="normalize.css">
+        <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
-    <h1>Webshop</h1>
-    <h5> SSSSSSSSSSSSSSSSS</h5>
-    <h2>Add new product</h2>
-    <form onsubmit="createNewProduct(event)">
-        <div>
-            <label>Name:
-               <div><input name ="name" placeholder="Name"></div>
-            </label>
+        <div id="main-container">
+            <header id="main-header">
+                <h1>NET(Not-Enough-ToDo)</h1>
+                <h3>the ultimate task handler</h3>
+            </header>
+            <div id="register-team-member-div">
+                <h2>Register a new team member</h1>
+                <input name="teamMemberName" placeholder="Enter your name (firstname and lastname)">
+                <input class="submit" type="button" value="Register teammember">
+            </div>
+            <div id="register-task-div">
+                <h2>Register a new task</h1>
+                <input name="work" placeholder="Arbeidsoppgave">
+                <input class="submit" type="button" value="Add new task!">
+            </div>
+            <div id ="assign-task-div">
+                <h2>Assign task to a team member</h2>
+                <!--<input name="worker" placeholder="Tildel">-->
+                
+                <label for="members-option">Choose member</label>
+                <select id="members-option" name="cars">
+                    <option value="none">No member selected</option>
+                </select>
+                <label for="task-option">Choose task</label>
+                <select id="task-option" name="cars">
+                    <option value="none">No task selected</option>
+                </select>
+                <input class="submit" type="button" value="Assign task to teammember">
+            </div>
+            <div id="output-div">
+                <div id="team-members-div">
+                    <h2 id="team-members-header">Team members</h2>
+                </div>
+                <div id="tasks-div">
+                    <h2 id="tasks-header">Arbeidsoppgaver</h2>
+                </div>
+                <div id="current-task-div">
+                    <h2 name="assignedTasks">Tildelte arbeidsoppgaver</h2>
+                </div>
+            </div>
         </div>
-        <div>
-            <label>Price:
-                <div><input name ="price" placeholder="Price"></div>
-            </label>
-        </div>
-        
-        <div>
-            <label>Description:
-                <div><textarea name ="description" placeholder="description"></textarea></div>
-            </label>
-        </div>
-        
-        <div>
-            <input type="submit" placeholder="Submit">
-        </div>
-
-    </form>
-    <h2>Our products</h2>
-    <div id="productList"></div>
+    <script src="script.js"></script>
     </body>
 </html>
-
