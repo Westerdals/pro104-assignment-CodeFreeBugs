@@ -12,28 +12,15 @@
                 <h1>NET(Not-Enough-ToDo)</h1>
                 <h3>the ultimate task handler</h3>
             </header>
-
-            <form onsubmit="createNewTeamMember(event)">
-                <h2>Register nytt medlem</h1>
-                <input name="fName" data-id="1" placeholder="Fornavn">
-                <input name="lName" data-id="1" placeholder="Etternavn">
-                <input type="submit" value="Legg til">
-            </form>
-
-            <form onsubmit="createNewTask(event)">
-                <h2>Register ny oppgave</h1>
-                <input name="task" data-id="1" placeholder="Arbeidsoppgave">
-                <input type="submit" data-id="1" value="Legg til oppgave">
-            </form>
-
-            <div id="assign-task-div">
-                <h2>Tildel arbeidsoppgaver</h2>
-                <input name="assign-teamember-input" placeholder="team medlemmer">
-                <input name="assign-task-input" placeholder="Arbeidsoppgave">
-                <input type="submit" value="Tildel oppgave">
+            <div id="register-team-member-div">
+                <h2>Register a new team member</h1>
+                <input name="teamMemberName" placeholder="Enter your name (firstname and lastname)">
+                <input class="submit" type="button" value="Register teammember">
             </div>
-            <div id="team-members-div">
-                <h2>Team medlemmer</h2>
+            <div id="register-task-div">
+                <h2>Register a new task</h1>
+                <input name="work" placeholder="Arbeidsoppgave">
+                <input class="submit" type="button" value="Add new task!">
             </div>
             <div id ="assign-task-div">
                 <h2>Assign task to a team member</h2>
@@ -60,19 +47,7 @@
                     <h2 name="assignedTasks">Tildelte arbeidsoppgaver</h2>
                 </div>
             </div>
-        </div> <!--end of main container-->
+        </div>
     <script src="script.js"></script>
-    <script>   
-         renderMemberList();
-         renderTaskList();
-        window.addEventListener("storage", function(event) {
-        if (event.key === "teamMemberList") {
-            renderMemberList();
-        }
-        if (event.key === "taskList") {
-            renderTaskList();
-        }
-        });
-        </script>
     </body>
 </html>
