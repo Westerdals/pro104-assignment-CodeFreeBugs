@@ -144,15 +144,17 @@ function listTeamMembers(a) {
     const teamMemberList = JSON.parse(localStorage.getItem('members'));
     const teamMemberName = document.querySelector('[name=teamMemberName]').value;
 
-    for(var i = a; i < teamMemberList.length; i++){
-        const memberItem = document.createElement('p');
-        memberOutputDiv.append(memberItem);
-        memberItem.textContent = teamMemberList[i];
+    if(teamMemberList != null){
+        for(var i = a; i < teamMemberList.length; i++){
+            const memberItem = document.createElement('p');
+            memberOutputDiv.append(memberItem);
+            memberItem.textContent = teamMemberList[i];
 
-        const memberOpt = document.createElement('option');
-        memberOptionList.append(memberOpt);
-        memberOpt.setAttribute("value", teamMemberList[i]);
-        memberOpt.textContent = teamMemberList[i];
+            const memberOpt = document.createElement('option');
+            memberOptionList.append(memberOpt);
+            memberOpt.setAttribute("value", teamMemberList[i]);
+            memberOpt.textContent = teamMemberList[i];
+        }
     }
     
 }
@@ -167,15 +169,17 @@ function listTasks(a) {
     const taskList = JSON.parse(localStorage.getItem('task'));
     const taskName = document.querySelector('[name=work]').value;
 
-    for(var i = a; i < taskList.length; i++){
-        const taskItem = document.createElement('p');
-        taskListDiv.append(taskItem);
-        taskItem.textContent = taskList[i];
+    if(taskList != null){
+        for(var i = a; i < taskList.length; i++){
+            const taskItem = document.createElement('p');
+            taskListDiv.append(taskItem);
+            taskItem.textContent = taskList[i];
 
-        const taskOpt = document.createElement('option');
-        taskOptionList.append(taskOpt);
-        taskOpt.setAttribute("value", taskList[i]);
-        taskOpt.textContent = taskList[i];
+            const taskOpt = document.createElement('option');
+            taskOptionList.append(taskOpt);
+            taskOpt.setAttribute("value", taskList[i]);
+            taskOpt.textContent = taskList[i];
+        }
     }
     
 }
@@ -226,10 +230,12 @@ function listAssignedTasks(a) {
     const assignedTasksDiv = document.querySelector('#current-task-div');
     const assignedTaskList = JSON.parse(localStorage.getItem('memberTask'));
 
-    for(var i = a; i < assignedTaskList.length; i++){
-        const taskItem = document.createElement('p');
-        assignedTasksDiv.append(taskItem);
-        taskItem.textContent = assignedTaskList[i];
+    if(assignedTaskList != null){
+        for(var i = a; i < assignedTaskList.length; i++){
+            const taskItem = document.createElement('p');
+            assignedTasksDiv.append(taskItem);
+            taskItem.textContent = assignedTaskList[i];
+        }
     }
 }   
 
