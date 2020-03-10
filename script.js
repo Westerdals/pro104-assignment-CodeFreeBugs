@@ -39,25 +39,6 @@ document.querySelectorAll('.submit')[2].addEventListener('click', (Event) => {
     }
 });
 
-<<<<<<< HEAD
-//Create teammember
-// clik on button for creating new teamMemeber.
-// details: firstname, lastname, role.
-// fill inputs.
-// Must also be able to "hold onto tasks info"
-// Store info in localStorage.
-
-// Function that stores values from the inputFields into localStorage
-/*makeObject()
-function makeObject(){
-    if(localStorage.getItem("members") == null){
-        var members = {name = []};
-        localStorage.setItem("members", JSON.stringify(members))
-        
-    }
-}*/
-=======
->>>>>>> v_hakon
 
 function createTeamMember() {
     var name;
@@ -72,31 +53,7 @@ function createTeamMember() {
     localStorage.setItem("members", nameString);
     listTeamMembers(JSON.parse(localStorage.getItem('members')).length -1);
 
-<<<<<<< HEAD
-    /*const teamMemberList = JSON.parse(localStorage.getItem('teamMemberList')) ?? [];
-    const name = document.querySelector('[name=teamMemberName]').value;
-    const id = Math.floor(Math.random() * 100 + 1);
-
-    const teamMember = {name, id};
-    this.member = teamMember;
-
-    if (localStorage.length < 1) {
-        teamMemberList.push(teamMember);
-        localStorage.setItem('teamMemberList', JSON.stringify(teamMemberList));
-        listTeamMembers();
-    } else {
-        alreadyRegistered(this.member, teamMemberList);
-    }
-
-    if (localStorage.length > 0 && !alreadyRegistered(this.member, teamMemberList)) {
-        this.member.id = id;
-        teamMemberList.push(teamMember);
-        localStorage.setItem('teamMemberList', JSON.stringify(teamMemberList));
-        listTeamMembers();
-    }*/
-=======
     
->>>>>>> v_hakon
 }
 
 // Create assignment/task
@@ -118,29 +75,6 @@ function createTask() {
     localStorage.setItem("task", nameString);
     listTasks(JSON.parse(localStorage.getItem('task')).length -1);
     
-<<<<<<< HEAD
-
-    /*const name = document.querySelector('[name=work]').value;
-    const taskList = JSON.parse(localStorage.getItem('taskList')) ?? [];
-
-    const task = {name};
-    this.task = task;
-
-    if (localStorage.length < 1) {
-        taskList.push(task);
-        localStorage.setItem('taskList', JSON.stringify(taskList));
-        listTasks();
-    } else {
-        alreadyRegistered(this.task, taskList);
-    }
-
-    if (localStorage.length > 0 && !alreadyRegistered(this.task, taskList)) {
-        taskList.push(task);
-        localStorage.setItem('taskList', JSON.stringify(taskList));
-        listTasks();
-    }*/
-=======
->>>>>>> v_hakon
 }
 
 // List members
@@ -213,31 +147,6 @@ function assignTaskToTeamMember() {
     listAssignedTasks(JSON.parse(localStorage.getItem('memberTask')).length -1);
 }
 
-<<<<<<< HEAD
-    /*const assignedTaskList = JSON.parse(localStorage.getItem('assignedTaskList')) ?? [];
-    const name = document.querySelector('[name=worker]').value;
-    const task = document.querySelector('[name=work]').value;
-
-    const assignedTask = {name, task};
-    this.assignedTask = assignedTask;
-
-    if (localStorage.length < 1) {
-        assignedTaskList.push(assignedTask);
-        localStorage.setItem('taskList', JSON.stringify(assignedTaskList));
-        listAssignedTasks();
-    } else {
-        alreadyRegistered(this.assignedTask, assignedTaskList);
-    }
-
-    if (localStorage.length > 0 && !alreadyRegistered(this.assignedTask, assignedTaskList)) {
-        assignedTaskList.push(assignedTask);
-        localStorage.setItem('assignedTaskList', JSON.stringify(assignedTaskList));
-        listAssignedTasks();
-    }
-}*/
-
-=======
->>>>>>> v_hakon
 listAssignedTasks(0);
 function listAssignedTasks(a) {
     const assignedTasksDiv = document.querySelector('#current-task-div');
