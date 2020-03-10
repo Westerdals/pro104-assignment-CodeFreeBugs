@@ -26,7 +26,8 @@ document.querySelectorAll('.submit')[1].addEventListener('click', (Event) => {
     createTask();
 });
 
-document.querySelector('#assign-task-div').addEventListener('change', function(Event) {
+// Assign values afther choosing "member" to assign "task" to
+document.querySelector('#assign-task-div').addEventListener('change', (Event) => {
     assignTaskToTeamMember(Event);
 });
 
