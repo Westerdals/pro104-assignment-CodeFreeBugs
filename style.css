@@ -10,7 +10,7 @@ p{
 }
 
 div{
-    margin-bottom: 15px; 
+    margin-bottom: 15px;
 }
 
 html, body {
@@ -19,7 +19,7 @@ html, body {
 }
 
 body {
-    background: rgba(0, 0, 0, 1);
+    background: rgba(0, 0, 0, 0.7);
 }
 
 #main-container{
@@ -27,7 +27,7 @@ body {
     padding: 15px;
     width: 100rem;
     height: 50rem;
-    border: 1px rgb(160, 150, 112) dashed;
+    border: 1px rgb(148, 148, 148) dashed;
     background-color: rgba(40,94,229,0.7);
     color: rgb(255,255,255);
 }
