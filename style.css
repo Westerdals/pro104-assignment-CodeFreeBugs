@@ -19,9 +19,10 @@ body {
     width: 100rem;
     height: 50rem;
     display: grid;
-    grid-auto-columns: 1fr auto;
-    grid-auto-rows: 20rem 1fr;
-    grid-template-columns: ;
+    grid-auto-columns: 2fr auto;
+    grid-auto-rows: 10rem 3fr;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(1, 1fr);
 
     border: 1px rgb(148, 148, 148) dashed;
     background: rgba(40,94,229,0.7);
