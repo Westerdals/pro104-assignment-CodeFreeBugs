@@ -27,24 +27,15 @@ document.querySelectorAll('.submit')[1].addEventListener('click', (Event) => {
 });
 
 document.querySelector('#assign-task-div').addEventListener('change', function(Event) {
-    
-    // if (Event.target.name === 'workers') {
-    //     member = Event.target.value;
-    // }
-
-    // if (Event.target.name === 'tasks') {
-    //     task = Event.target.value;            
-    // }
-
-    assignTaskToTeamMember(member, task);
+    assignTaskToTeamMember(Event);
 });
 
-    // Assign the created task to the created teamMember, list the assignment on the webpage and clear/reset the inputFields
-    document.querySelectorAll('.submit')[2].addEventListener('click', (Event) => {
-        // PreventDefault: default-action of a sbumit-button on a form is to send the form and refresh the webpage, we don't want that now
-        Event.preventDefault();
-        listAssignedTasks();
-    });
+// Assign the created task to the created teamMember, list the assignment on the webpage and clear/reset the inputFields
+document.querySelectorAll('.submit')[2].addEventListener('click', (Event) => {
+    // PreventDefault: default-action of a sbumit-button on a form is to send the form and refresh the webpage, we don't want that now
+    Event.preventDefault();
+    listAssignedTasks();
+});
 
 // Eventlistener for localStorage events that can be used when changing values in localStorage through another browser-window
 // NB: LocalStorage events get triggered on the "main browser-window" when something changes the values from "another browser-window"
@@ -168,35 +159,21 @@ const listTasks = () => {
 }
 
 // Function that get the text values from the choosen options, and stores the details in "assignedTaskList"-key in localStorage
-function assignTaskToTeamMember(member, task) {
+function assignTaskToTeamMember(Event) {
     // Stores javaScript objects parsed from JSON.string if the "assignedTaskList"-exists in localStorage (true) or returns and empty array (false)
     // Do you remember the rule with null coalescing operator?: "tries option on the left-side, if null or undefined -> chooses option on the right-side"
     const assignedTaskList = JSON.parse(localStorage.getItem('assignedTaskList')) ?? [];
 
-    // Get the input-field above the "workers"-datalist, and get the text from the list-value (the list is the datalist assosiated with the input... not confusing at all)
-
-    console.log(member);
-    console.log(task);
-    
-
-    
-        // Get the input-field above the "tasks"-datalist, and get the text from the list-value (the list is the datalist assosiated with the input... not confusing at all)
-        //const taskName = document.querySelector('[name=tasks]').list.options;
-        
-    
-
-    // Returns to the function-caller if "teamMember" or "task" has not been created (therefore, empty values in the corresponding datalists)
-    // if true: return to function-caller/"do nothing"
-    // if false: continue downwards
-    //if (memberName === "" || taskName === "") {
-    //    return;    
-    //}
-
+    if (Event.target.name === 'worker') {
+        const member = Event.target.value;
+    } else if (Event.target.name === 'tasks') {
+        const task = Event.target.value;
+    }
     // Store the "assignemnt"-result into variable that will be displayed as "the assignemnt"
-    //const assignment = `${taskName} has been assigned to ${memberName}`;
+    const assignment = `${task.taskName} has been assigned to ${member.memberName}`;
     
     // Store the details into "this.object"-reference
-    //this.assignedTask = {memberName, taskName};
+    this.assignedTask = {memberName, taskName, assignment};
 
     // Check if the assignment has already been registered
     // if false: add "this specific assigned task" to localStorage
