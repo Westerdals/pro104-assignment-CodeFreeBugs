@@ -7,14 +7,6 @@
     font-weight: lighter;
 }
 
-p{
-    font-size: 20px;
-}
-
-div{
-    margin-bottom: 15px;
-}
-
 html, body {
     width: 100vw;
     height: auto;
@@ -22,6 +14,10 @@ html, body {
 
 body {
     background: rgb(255,240,245);
+}
+
+p{
+    font-size: 20px;
 }
 
 .leftSideBar {

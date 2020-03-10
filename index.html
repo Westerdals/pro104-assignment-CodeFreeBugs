@@ -16,33 +16,40 @@
             <form class="form">
                 <div id="register-team-member-div" class="registerTeamMember">
                     <h2>Registrer nytt teammedlem</h1>
-                    <input name="teamMemberName" placeholder="Enter your name (firstname and lastname)">
-                    <input class="submit" type="submit" value="Register teammember">
+                    <input name="teamMemberName" placeholder="Skriv inn navn(fornavn og etternavn)">
+                    <input class="submit" type="button" value="Register teammedlem">
                 </div>
                 <div id="register-task-div" class="registerTask">
                     <h2>Legg til ny oppgave</h1>
                     <input name="work" placeholder="Arbeidsoppgave">
-                    <input class="submit" type="submit" value="Add new task!">
+                    <input class="submit" type="submit" value="Legg til oppgave">
                 </div>
                 <div id ="assign-task-div" class="registerAssignedTask">
-                    <h2>Assign task to a team member</h2>
-                    <input name="workers" list="workers" placeholder="List of members">
-                    <datalist id="workers"></datalist>
-                    <input name="tasks" list="tasks" placeholder="List of tasks">
-                    <datalist id="tasks"></datalist>
-                    <input class="submit" type="submit" value="Assign task to teammember">
+                    <h2>Tildel oppgave til teammedlem</h2>
+                    
+                    <label for="members-option">Velg teammedlem</label>
+                    <select id="members-option">g
+                        <option value="none">ingen valgt</option>
+                    </select>
+                    <label for="task-option">Velg Oppgave</label>
+                    <select id="task-option">
+                        <option value="none">Ingen oppgave valgt</option>
+                    </select>
+                    <input class="submit" type="button" value="Tildel oppgave til teammedlem">
                 </div>
             </form>
-            <div id="team-members-div" class="list">
-                <h2 name="teamMembersHeader">Team medlemmer</h2>
-            </div>
-            <div id="tasks-div" class="list">
-                <h2 name="tasks">Arbeidsoppgaver</h2>
-            </div>
-            <div id="current-task-div" class="list">
-                <h2 name="assignedTasks">Tildelte arbeidsoppgaver</h2>
-            </div>
-        <div class="rightSideBar"></div>
+            
+                <div id="team-members-div" class="list">
+                    <h2 name="teamMembersHeader">Team</h2>
+                </div>
+                <div id="tasks-div" class="list">
+                    <h2 name="tasks">Arbeidsoppgaver</h2>
+                </div>
+                <div id="current-task-div" class="list">
+                    <h2 name="assignedTasks">Tildelte arbeidsoppgaver</h2>
+                </div>
+            
+            <div class="rightSideBar"></div>
         </div>
     <script src="script.js"></script>
     </body>
