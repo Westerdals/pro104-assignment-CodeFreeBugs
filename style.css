@@ -37,27 +37,7 @@ body {
     height: auto;
 }
 
-<<<<<<< HEAD
-div> input{
-display: block;
-}
-#team-members-div{
-    float: left;
-    padding-right: 10px;
-    border: 1px black solid;
-}
-#task-div{
-    float:left;
-    padding-right: 10px;
-    border: 1px black solid;
-}
-#current-task-div{
-    float:left;
-    padding-right: 10px;
-    border: 1px black solid;
-=======
 #output-div > div{
     display: inline-table;
     margin-right: 20px;
->>>>>>> master
 }
