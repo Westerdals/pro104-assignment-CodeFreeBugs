@@ -5,6 +5,14 @@
     box-sizing: border-box;
 }
 
+p{
+    font-size: 20px;
+}
+
+div{
+    margin-bottom: 15px;
+}
+
 html, body {
     width: 100vw;
     height: auto;
@@ -16,6 +24,7 @@ body {
 
 #main-container{
     margin: 2rem auto;
+    padding: 15px;
     width: 100rem;
     height: 50rem;
     border: 1px rgb(148, 148, 148) dashed;
@@ -28,6 +37,7 @@ body {
     height: auto;
 }
 
+<<<<<<< HEAD
 div> input{
 display: block;
 }
@@ -45,4 +55,9 @@ display: block;
     float:left;
     padding-right: 10px;
     border: 1px black solid;
+=======
+#output-div > div{
+    display: inline-table;
+    margin-right: 20px;
+>>>>>>> master
 }

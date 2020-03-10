@@ -35,11 +35,35 @@
             <div id="team-members-div">
                 <h2>Team medlemmer</h2>
             </div>
+<<<<<<< HEAD
             <div id="task-div">
                 <h2>Arbeidsoppgaver</h2>
+=======
+            <div id ="assign-task-div">
+                <h2>Assign task to a team member</h2>
+                <!--<input name="worker" placeholder="Tildel">-->
+                
+                <label for="members-option">Choose member</label>
+                <select id="members-option" name="cars">
+                    <option value="none">No member selected</option>
+                </select>
+                <label for="task-option">Choose task</label>
+                <select id="task-option" name="cars">
+                    <option value="none">No task selected</option>
+                </select>
+                <input class="submit" type="button" value="Assign task to teammember">
+>>>>>>> master
             </div>
-            <div id="current-task-div">
-                <h2>Tildelte arbeidsoppgaver</h2>
+            <div id="output-div">
+                <div id="team-members-div">
+                    <h2 id="team-members-header">Team members</h2>
+                </div>
+                <div id="tasks-div">
+                    <h2 id="tasks-header">Arbeidsoppgaver</h2>
+                </div>
+                <div id="current-task-div">
+                    <h2 name="assignedTasks">Tildelte arbeidsoppgaver</h2>
+                </div>
             </div>
         </div> <!--end of main container-->
     <script src="script.js"></script>
