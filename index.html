@@ -8,22 +8,23 @@
     </head>
     <body>
         <div id="main-container">
-            <header id="main-header">
-                <h1>NET(Not-Enough-ToDo)</h1>
-                <h3>the ultimate task handler</h3>
+        <div class="leftSideBar"></div>
+            <header id="main-header" class="header">
+                <h1 class="headline">NET(Not-Enough-ToDo)</h1>
+                <h3 class="headline">the ultimate task handler</h3>
             </header>
-            <form>
-                <div id="register-team-member-div">
+            <form class="form">
+                <div id="register-team-member-div" class="registerTeamMember">
                     <h2>Register a new team member</h1>
                     <input name="teamMemberName" placeholder="Enter your name (firstname and lastname)">
                     <input class="submit" type="submit" value="Register teammember">
                 </div>
-                <div id="register-task-div">
+                <div id="register-task-div" class="registerTask">
                     <h2>Register a new task</h1>
                     <input name="work" placeholder="Arbeidsoppgave">
                     <input class="submit" type="submit" value="Add new task!">
                 </div>
-                <div id ="assign-task-div">
+                <div id ="assign-task-div" class="registerAssignedTask">
                     <h2>Assign task to a team member</h2>
                     <input name="workers" list="workers" placeholder="List of members">
                     <datalist id="workers"></datalist>
@@ -32,15 +33,16 @@
                     <input class="submit" type="submit" value="Assign task to teammember">
                 </div>
             </form>
-            <div id="team-members-div">
+            <div id="team-members-div" class="list">
                 <h2 name="teamMembersHeader">Team medlemmer</h2>
             </div>
-            <div id="tasks-div">
+            <div id="tasks-div" class="list">
                 <h2 name="tasks">Arbeidsoppgaver</h2>
             </div>
-            <div id="current-task-div">
+            <div id="current-task-div" class="list">
                 <h2 name="assignedTasks">Tildelte arbeidsoppgaver</h2>
             </div>
+        <div class="rightSideBar"></div>
         </div>
     <script src="script.js"></script>
     </body>
