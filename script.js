@@ -54,7 +54,6 @@ console.group('Storage event fired: ' + Event.type)
         console.log("New value(s) added");
         console.table(JSON.parse(Event.newValue));
     console.groupEnd();
-
 console.groupEnd();    
 });
 
