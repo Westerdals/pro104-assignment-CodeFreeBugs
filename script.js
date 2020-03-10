@@ -166,22 +166,23 @@ function assignTaskToTeamMember(Event) {
 
     if (Event.target.name === 'worker') {
         const member = Event.target.value;
+        this.assignedTask = {member};
     } else if (Event.target.name === 'tasks') {
         const task = Event.target.value;
+        this.assignedTask = {task};
     }
     // Store the "assignemnt"-result into variable that will be displayed as "the assignemnt"
     const assignment = `${task.taskName} has been assigned to ${member.memberName}`;
     
     // Store the details into "this.object"-reference
-    this.assignedTask = {memberName, taskName, assignment};
+    this.assignedTask = {member, task, assignment};
 
     // Check if the assignment has already been registered
     // if false: add "this specific assigned task" to localStorage
     // if true: Warn the user that the task has already been assigned to that member
    if (!alreadyRegistered(this.assignedTask, assignedTaskList)) {
         assignedTaskList.push(this.assignedTask);
-        localStorage.setItem('assignedTaskList', JSON.stringify(assignedTaskList));
-        listAssignedTasks();        
+        localStorage.setItem('assignedTaskList', JSON.stringify(assignedTaskList));        
     }
 }
 
@@ -198,9 +199,6 @@ const listAssignedTasks = () => {
         // Check if "this particular tasks' name" is the same as the "taskName of the iterated task from the list"
         // If true: create details in datalist and output list of tasks
         // If false: continue iterating the list
-
-        console.log(this.assignedTask.assignment);
-
         if (this.assignedTask.assignment === assignedTask.assignment) {
             const assignedTaskItem = document.createElement('p');
             assignedTasksOutputDiv.appendChild(assignedTaskItem);
