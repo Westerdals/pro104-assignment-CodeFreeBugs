@@ -86,7 +86,7 @@ function listTeamMembers(a) {
     const memberOutputDiv = document.querySelector('#team-members-div');
     const memberOptionList = document.querySelector('#members-option');
     const teamMemberList = JSON.parse(localStorage.getItem('members'));
-    const teamMemberName = document.querySelector('[name=teamMemberName]').value;
+
 
     if(teamMemberList != null){
         for(var i = a; i < teamMemberList.length; i++){
@@ -157,18 +157,6 @@ function listAssignedTasks(a) {
             const taskItem = document.createElement('p');
             assignedTasksDiv.append(taskItem);
             taskItem.textContent = assignedTaskList[i];
-        }
-    }
-}   
-
-
-function alreadyRegistered(entity, list) {
-    let alreadyRegistered = false;
-    for (const item of list) {
-        if (entity.name === item.name) {
-            console.error(`The member ${entity.name} has already been registered`);
-            alreadyRegistered = true;
-            return alreadyRegistered;
         }
     }
 }
