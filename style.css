@@ -3,6 +3,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: "Arial";
+    font-weight: lighter;
 }
 
 p{
@@ -19,7 +21,7 @@ html, body {
 }
 
 body {
-    background: rgba(0, 0, 0, 0.7);
+    background: rgb(255,240,245);
 }
 
 #main-container{
@@ -28,7 +30,7 @@ body {
     width: 100rem;
     height: 50rem;
     border: 1px rgb(148, 148, 148) dashed;
-    background-color: rgba(40,94,229,0.7);
+    background-color: rgb(123,104,238);
     color: rgb(255,255,255);
 }
 
