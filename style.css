@@ -3,6 +3,16 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: "Arial";
+    font-weight: lighter;
+}
+
+p{
+    font-size: 20px;
+}
+
+div{
+    margin-bottom: 15px;
 }
 
 html, body {
@@ -11,7 +21,7 @@ html, body {
 }
 
 body {
-    background: rgba(0, 0, 0, 0.7);
+    background: rgb(255,240,245);
 }
 
 .leftSideBar {
@@ -24,6 +34,7 @@ body {
 
 #main-container{
     margin: 2rem auto;
+    padding: 15px;
     width: 100rem;
     height: 50rem;
     display: grid;
@@ -32,7 +43,7 @@ body {
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(3, 15rem);
     border: 1px rgb(148, 148, 148) dashed;
-    background: rgba(40,94,229,0.7);
+    background-color: rgb(123,104,238);
     color: rgb(255,255,255);
 }
 

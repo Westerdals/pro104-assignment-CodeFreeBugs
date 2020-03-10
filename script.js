@@ -14,16 +14,21 @@
 
 // Create teamMember after filling inputFields and clicking submit
 document.querySelectorAll('.submit')[0].addEventListener('click', (Event) => {
-    // PreventDefault: default-action of a sbumit-button on a form is to send the form and refresh the webpage, we don't want that now
-    Event.preventDefault();
-    createTeamMember();
+    if(document.getElementsByName("teamMemberName")[0].value != ""){
+        Event.preventDefault();
+        createTeamMember();
+        document.getElementsByName("teamMemberName")[0].value = "";
+    }
 });
 
 // Create task after filling inputFields and clicking submit
 document.querySelectorAll('.submit')[1].addEventListener('click', (Event) => {
     // PreventDefault: default-action of a sbumit-button on a form is to send the form and refresh the webpage, we don't want that now
     Event.preventDefault();
-    createTask();
+    if(document.getElementsByName("work")[0].value != ""){
+        createTask();
+        document.getElementsByName("work")[0].value = "";
+    }
 });
 
 // Assign values afther choosing "member" to assign "task" to
@@ -35,179 +40,133 @@ document.querySelector('#assign-task-div').addEventListener('change', (Event) =>
 document.querySelectorAll('.submit')[2].addEventListener('click', (Event) => {
     // PreventDefault: default-action of a sbumit-button on a form is to send the form and refresh the webpage, we don't want that now
     Event.preventDefault();
-    listAssignedTasks();
+    if(document.querySelector('#members-option').value != "none" && document.querySelector('#task-option').value != "none"){
+        assignTaskToTeamMember();    
+        document.querySelector('#members-option').value = "none";
+        document.querySelector('#task-option').value = "none";
+    }
 });
 
-// Eventlistener for localStorage events that can be used when changing values in localStorage through another browser-window
-// NB: LocalStorage events get triggered on the "main browser-window" when something changes the values from "another browser-window"
-window.addEventListener('storage', (Event) => {
-console.group('Storage event fired: ' + Event.type)
-    console.log("StorageArea");
-    console.table(Event.storageArea)
-    console.group("keys");
-        console.log(`Key affected: ${Event.key}`);
-    console.groupEnd();
 
-    console.group("values");
-        console.log("Old value(s) changed/deleted")
-        console.table(JSON.parse(Event.oldValue));
-        console.log("New value(s) added");
-        console.table(JSON.parse(Event.newValue));
-    console.groupEnd();
-console.groupEnd();    
-});
-
-// Function that stores entered teamMember details from inputField into localStorage
 function createTeamMember() {
-    // null-coalescing operator (??): Tries to get the localStorage item with key 'teamMemberList', 
-    // Chooses the empty array if value on the left is null or undefined
-    const teamMemberList = JSON.parse(localStorage.getItem('teamMemberList')) ?? [];
-
-    // Fetch the value entered in the "teamMemberName"-inputField
-    const memberName = document.querySelector('[name=teamMemberName]').value;
-
-    // Generate a random number from 1-99 to use as an unique id for the teamMember (not required, but I like the idea of having it)
-    // Another great thing is, it proves that the same member that gets registered is the same that recives a task later
-    const id = Math.floor(Math.random() * 100 + 1);
-
-    // Store the values into "this.member"-object 
-    this.member = {memberName, id};
-
-    // Calling function "alreadyRegistered", that takes in a "thing" we want to check and the list to check against
-    // It returns false if the "thing" is already in the "list", and returns true if it's not already in the list
-    // After that the "listTeamMembers"-function gets called
-    if (!alreadyRegistered(this.member, teamMemberList)) {
-        teamMemberList.push(this.member);
-        localStorage.setItem('teamMemberList', JSON.stringify(teamMemberList));
-        listTeamMembers();
+    var name;
+    if(localStorage.getItem("members") == null){
+        name = [document.querySelector('[name=teamMemberName]').value];
+    }else{
+        name = JSON.parse(localStorage.getItem("members"));
+        name.push(document.querySelector('[name=teamMemberName]').value);
+        localStorage.removeItem("members");
     }
-}
+    var nameString = JSON.stringify(name);
+    localStorage.setItem("members", nameString);
+    listTeamMembers(JSON.parse(localStorage.getItem('members')).length -1);
 
-// Function that fetch a list of teamMembers from localStorage (function at the bottom), and generates a "<p></p>"-element with details for each member
-// NB: I've used ".textContent"-property instead of ".innerHTML" since I only need to store text and not HTML-content in the "p"-element, and textContent handles raw-text and therefore is parsed faster
-// The element is appended to the "memberOutputDiv" on the website
-const listTeamMembers = () => {
-    const memberOutputDiv = document.querySelector('#team-members-div');
-    const teamMemberList = fetchListFromLocalStorage(localStorage.teamMemberList);
-    // Fetch the needed datalist (for choosing which teamMember should have which task)
-    const workersDataList = document.querySelector('#workers');
-
-    for (const member of teamMemberList) {
-        // Check if "this particular member's ID-number" is the same as the "ID-number of the iterated member from the list"
-        // If true: create details in datalist and output list of teamMembers
-        // If false: continue iterating the list
-        if (this.member.id === member.id) {
-            const memberItem = document.createElement('p');
-            const workerDataItem = document.createElement('option');
-            memberItem.textContent = this.member.memberName;
-            workerDataItem.value = `Name: ${this.member.memberName} - ID-number: ${this.member.id}`;
-            memberOutputDiv.appendChild(memberItem);
-            workersDataList.appendChild(workerDataItem);
-        }   
-    }
+    
 }
 
 // Function that takes in the "registered task", check if it's already registered (the same way as teamMember) and list the tasks
 // The memberdetails and task-details gets fetched and stored into "<option></option>"-elements inside their respective "<datalist></datalist>"-element
 // That makes it possible to choose a member and what task that member should be assigned to
 function createTask() {
-    // Store empty array inside taskList variable when the localStorage isn't already created (if the left-side expression is null or undefined)
-    const taskList = JSON.parse(localStorage.getItem('taskList')) ?? [];
-    // Store typed in task-value into variable
+
+    var name;
+    if(localStorage.getItem("task") == null){
+        name = [document.querySelector('[name=work]').value];
+    }else{
+        name = JSON.parse(localStorage.getItem("task"));
+        name.push(document.querySelector('[name=work]').value);
+        localStorage.removeItem("task");
+    }
+    var nameString = JSON.stringify(name);
+    localStorage.setItem("task", nameString);
+    listTasks(JSON.parse(localStorage.getItem('task')).length -1);
+    
+}
+
+// List members
+// Get info from localStorage.
+// loop through and output to div.
+// Should it run on interval?
+listTeamMembers(0);
+function listTeamMembers(a) {
+    const memberOutputDiv = document.querySelector('#team-members-div');
+    const memberOptionList = document.querySelector('#members-option');
+    const teamMemberList = JSON.parse(localStorage.getItem('members'));
+    const teamMemberName = document.querySelector('[name=teamMemberName]').value;
+
+    if(teamMemberList != null){
+        for(var i = a; i < teamMemberList.length; i++){
+            const memberItem = document.createElement('p');
+            memberOutputDiv.append(memberItem);
+            memberItem.textContent = teamMemberList[i];
+
+            const memberOpt = document.createElement('option');
+            memberOptionList.append(memberOpt);
+            memberOpt.setAttribute("value", teamMemberList[i]);
+            memberOpt.textContent = teamMemberList[i];
+        }
+    }
+    
+}
+
+// List assignments/task
+// Get info from localStorage.
+// loop through and output to div.
+listTasks(0);
+function listTasks(a) {
+    const taskListDiv = document.querySelector('#tasks-div');
+    const taskOptionList = document.querySelector('#task-option');
+    const taskList = JSON.parse(localStorage.getItem('task'));
     const taskName = document.querySelector('[name=work]').value;
 
-    // Store typed in task-value into "this.object"-reference
-    this.task = {taskName};
-
-    // Call function that checks if "the task that was typed in now" has already been stored in localStorage
-    // if returnes true: Don't push "the task" into localStorage
-    // if returnes false: Push "the task" into localStorage, and list the tasks on the webpage
-    if (!alreadyRegistered(this.task, taskList)) {
-        taskList.push(this.task);
-        localStorage.setItem('taskList', JSON.stringify(taskList));
-        listTasks();
-    }
-}
-
-// Function that list tasks entered in the input-field the exact same way as the "listTeamMembers"-function
-// TLDR: 
-// 1. Get div-element for displaying output
-// 2. Fetch list of tasks from localStorage
-// 3. Fetch the datalist-element for displaying assignment-options
-// 4. loop through the list and create "paragraph"-element for each that gets appended to the output-div
-// 5. loop through the list and create "option"-element for each that gets appended to the datalist-element
-const listTasks = () => {
-    const taskOutputDiv = document.querySelector('#tasks-div');
-    const taskList = fetchListFromLocalStorage(undefined, localStorage.taskList, undefined);
-    // Fetch the needed datalist (for choosing which teamMember should have which task)
-    const tasksDataList = document.querySelector('#tasks');
-
-    for (const task of taskList) {
-        // Check if "this particular tasks' name" is the same as the "taskName of the iterated task from the list"
-        // If true: create details in datalist and output list of tasks
-        // If false: continue iterating the list
-        if (this.task.taskName === task.taskName) {
+    if(taskList != null){
+        for(var i = a; i < taskList.length; i++){
             const taskItem = document.createElement('p');
-            const taskDataItem = document.createElement('option');
-            taskOutputDiv.appendChild(taskItem);
-            tasksDataList.appendChild(taskDataItem);
-            taskItem.textContent = this.task.taskName;
-            taskDataItem.value = this.task.taskName;
+            taskListDiv.append(taskItem);
+            taskItem.textContent = taskList[i];
+
+            const taskOpt = document.createElement('option');
+            taskOptionList.append(taskOpt);
+            taskOpt.setAttribute("value", taskList[i]);
+            taskOpt.textContent = taskList[i];
         }
     }
-}
-
-// Function that get the text values from the choosen options, and stores the details in "assignedTaskList"-key in localStorage
-function assignTaskToTeamMember(Event) {
-    // Stores javaScript objects parsed from JSON.string if the "assignedTaskList"-exists in localStorage (true) or returns and empty array (false)
-    // Do you remember the rule with null coalescing operator?: "tries option on the left-side, if null or undefined -> chooses option on the right-side"
-    const assignedTaskList = JSON.parse(localStorage.getItem('assignedTaskList')) ?? [];
-
-    if (Event.target.name === 'worker') {
-        const member = Event.target.value;
-        this.assignedTask = {member};
-    } else if (Event.target.name === 'tasks') {
-        const task = Event.target.value;
-        this.assignedTask = {task};
-    }
-    // Store the "assignemnt"-result into variable that will be displayed as "the assignemnt"
-    const assignment = `${task.taskName} has been assigned to ${member.memberName}`;
     
-    // Store the details into "this.object"-reference
-    this.assignedTask = {member, task, assignment};
-
-    // Check if the assignment has already been registered
-    // if false: add "this specific assigned task" to localStorage
-    // if true: Warn the user that the task has already been assigned to that member
-   if (!alreadyRegistered(this.assignedTask, assignedTaskList)) {
-        assignedTaskList.push(this.assignedTask);
-        localStorage.setItem('assignedTaskList', JSON.stringify(assignedTaskList));        
-    }
 }
 
-// Function that display list of assignments by the exact same logic as "listTeamMembers" and "listTasks"
-const listAssignedTasks = () => {
-    const assignedTasksOutputDiv = document.querySelector('#current-task-div');
-    // NB: I'm not sure if it's "good practise" to enter "undefined" as a argument-value for the parameters I don't want to fill in 
-    // (I need to enter a value for parameter number three, but I can't do that without filling in the rest)
-    // I can't make any of them optional (by filling in a default value in the parameters in the function declaration)...
-    const assignedTaskList = fetchListFromLocalStorage(undefined, undefined, localStorage.assignedTaskList); 
+// Assign task to teammember
+// Remove task from page and put it under the "teamMember"?
+// Make the teamMember "hold onto the task"
+function assignTaskToTeamMember() {
 
-    // Iterate through list of assignedTask from localStorage, generate paragraph for each and append to "output-div"
-    for (const assignedTask of assignedTaskList) {
-        // Check if "this particular tasks' name" is the same as the "taskName of the iterated task from the list"
-        // If true: create details in datalist and output list of tasks
-        // If false: continue iterating the list
-        if (this.assignedTask.assignment === assignedTask.assignment) {
-            const assignedTaskItem = document.createElement('p');
-            assignedTasksOutputDiv.appendChild(assignedTaskItem);
-            assignedTaskItem.textContent = this.assignedTask.assignment;
+    var memberTask;
+    if(localStorage.getItem("memberTask") == null){
+        memberTask = [`${document.querySelector('#members-option').value} skal ${document.querySelector('#task-option').value}`];
+    }else{
+        memberTask = JSON.parse(localStorage.getItem("memberTask"));
+        memberTask.push([`${document.querySelector('#members-option').value} skal ${document.querySelector('#task-option').value}`]);
+        localStorage.removeItem("nameTask");
+    }
+    var memberTaskString = JSON.stringify(memberTask);
+    localStorage.setItem("memberTask", memberTaskString);
+
+    listAssignedTasks(JSON.parse(localStorage.getItem('memberTask')).length -1);
+}
+
+listAssignedTasks(0);
+function listAssignedTasks(a) {
+    const assignedTasksDiv = document.querySelector('#current-task-div');
+    const assignedTaskList = JSON.parse(localStorage.getItem('memberTask'));
+
+    if(assignedTaskList != null){
+        for(var i = a; i < assignedTaskList.length; i++){
+            const taskItem = document.createElement('p');
+            assignedTasksDiv.append(taskItem);
+            taskItem.textContent = assignedTaskList[i];
         }
     }
+}   
 
-    // Clear/reset values entered after an assignment has been listed
-    document.forms[0].reset();
-}
 
 // Function that takes in "a thing to check" and "a list that contains the other things of the same type"
 // i.e: Takes in "this.member" and "teamMemberList"
@@ -263,29 +222,5 @@ function alreadyRegistered(entity, list) {
                 return true;
             }
         }
-    }
-}
-
-// "Utility function" that fetches the list passed to it as an argument and returns it to the function caller.
-// It's used for easy access to the list you need, where you need it. 
-function fetchListFromLocalStorage(memberList, taskList, assignedList) {
-    // Store the arguments passed in from the function-call into "this.object"-references
-    this.memberList = memberList;
-    this.taskList = taskList;
-    this.assignedList = assignedList;
-
-    // Returns the teamMemberList to the function-caller if it's supplied as an argument
-    if (this.memberList != undefined) {
-        return this.memberList = JSON.parse(localStorage.getItem('teamMemberList'));
-    }
-    
-    // Returns the taskList to the function-caller if it's supplied as an argument
-    if (this.taskList != undefined) {
-        return this.taskList = JSON.parse(localStorage.getItem('taskList'));
-    }
-
-    // Returns the assignedTaskList to the function-caller if it's supplied as an argument
-    if (this.assignedList != undefined) {
-        return this.assignedList = JSON.parse(localStorage.getItem('assignedTaskList'));
     }
 }

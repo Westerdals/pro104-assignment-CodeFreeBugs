@@ -1,5 +1,7 @@
 # Arbeidskrav-Gruppe 28
 
+Alle medlemmer har bidratt til fullføre arbeidskravet
+
 ### Gruppemedlemmer
 - Andreas Kirkfjell
 - Andreas Nilsen
