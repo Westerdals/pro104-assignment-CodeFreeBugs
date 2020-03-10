@@ -39,6 +39,7 @@ document.querySelectorAll('.submit')[2].addEventListener('click', (Event) => {
     }
 });
 
+<<<<<<< HEAD
 //Create teammember
 // clik on button for creating new teamMemeber.
 // details: firstname, lastname, role.
@@ -55,6 +56,8 @@ function makeObject(){
         
     }
 }*/
+=======
+>>>>>>> v_hakon
 
 function createTeamMember() {
     var name;
@@ -69,6 +72,7 @@ function createTeamMember() {
     localStorage.setItem("members", nameString);
     listTeamMembers(JSON.parse(localStorage.getItem('members')).length -1);
 
+<<<<<<< HEAD
     /*const teamMemberList = JSON.parse(localStorage.getItem('teamMemberList')) ?? [];
     const name = document.querySelector('[name=teamMemberName]').value;
     const id = Math.floor(Math.random() * 100 + 1);
@@ -90,6 +94,9 @@ function createTeamMember() {
         localStorage.setItem('teamMemberList', JSON.stringify(teamMemberList));
         listTeamMembers();
     }*/
+=======
+    
+>>>>>>> v_hakon
 }
 
 // Create assignment/task
@@ -111,6 +118,7 @@ function createTask() {
     localStorage.setItem("task", nameString);
     listTasks(JSON.parse(localStorage.getItem('task')).length -1);
     
+<<<<<<< HEAD
 
     /*const name = document.querySelector('[name=work]').value;
     const taskList = JSON.parse(localStorage.getItem('taskList')) ?? [];
@@ -131,6 +139,8 @@ function createTask() {
         localStorage.setItem('taskList', JSON.stringify(taskList));
         listTasks();
     }*/
+=======
+>>>>>>> v_hakon
 }
 
 // List members
@@ -203,6 +213,7 @@ function assignTaskToTeamMember() {
     listAssignedTasks(JSON.parse(localStorage.getItem('memberTask')).length -1);
 }
 
+<<<<<<< HEAD
     /*const assignedTaskList = JSON.parse(localStorage.getItem('assignedTaskList')) ?? [];
     const name = document.querySelector('[name=worker]').value;
     const task = document.querySelector('[name=work]').value;
@@ -225,6 +236,8 @@ function assignTaskToTeamMember() {
     }
 }*/
 
+=======
+>>>>>>> v_hakon
 listAssignedTasks(0);
 function listAssignedTasks(a) {
     const assignedTasksDiv = document.querySelector('#current-task-div');
