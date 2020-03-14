@@ -70,8 +70,10 @@ function createTeamMember() {
     // Another great thing is, it proves that the same member that gets registered is the same that recives a task later
     const id = Math.floor(Math.random() * 100 + 1);
 
-    // Store the values into "this.member"-object 
-    this.member = {memberName, id};
+    if (memberName != "") {
+        // Store the values into "this.member"-object 
+        this.member = {memberName, id};
+    }
 
     // Calling function "alreadyRegistered", that takes in a "thing" we want to check and the list to check against
     // It returns false if the "thing" is already in the "list", and returns true if it's not already in the list
@@ -116,8 +118,10 @@ function createTask() {
     // Store typed in task-value into variable
     const taskName = document.querySelector('[name=work]').value;
 
-    // Store typed in task-value into "this.object"-reference
-    this.task = {taskName};
+    if (taskName != "") {
+        // Store typed in task-value into "this.object"-reference
+        this.task = {taskName};
+    }
 
     // Call function that checks if "the task that was typed in now" has already been stored in localStorage
     // if returnes true: Don't push "the task" into localStorage
@@ -172,7 +176,7 @@ function assignTaskToTeamMember(Event) {
     }
     // Store the "assignemnt"-result into variable that will be displayed as "the assignemnt"
     const assignment = `${task.taskName} has been assigned to ${member.memberName}`;
-    
+
     // Store the details into "this.object"-reference
     this.assignedTask = {member, task, assignment};
 
