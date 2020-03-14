@@ -233,13 +233,6 @@ function alreadyRegistered(entity, list) {
     const teamListProps = Object.getOwnPropertyNames(teamList);
     const taskListProps = Object.getOwnPropertyNames(taskList);
 
-
-    // NB: I had to make an If-check for values in the "teamMemberList" and "taskList", since the property-names (i.e: .memberName and .taskName) -
-    // wouldn't work as expected in the "assignTeamMemberToTask"-function if they where the same 
-    // (the assignment description wouldn't differentiate between name of the teamMember and name of the task, and lead to stuff like this: bob has been assigned to bob, or bob has been assigned to make a task).
-
-    // Check if the number of properties on the "list of things" match the number of properties on the "teamList" (make the list recognize that it is the "teamlist")
-    // This works since the "teamListProps.length" is 0 if it's not supplied as an argument in the function-call
     if (listProps.length === teamListProps.length) {
         // iterate through the "list of things" supplied as argument on function-call
         for (const item of list) {
