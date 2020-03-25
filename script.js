@@ -35,7 +35,7 @@ document.querySelector('#assign-task-div').addEventListener('change', (Event) =>
 document.querySelectorAll('.submit')[2].addEventListener('click', (Event) => {
     // PreventDefault: default-action of a sbumit-button on a form is to send the form and refresh the webpage, we don't want that now
     Event.preventDefault();
-    listAssignedTasks();
+    
 });
 
 // Eventlistener for localStorage events that can be used when changing values in localStorage through another browser-window
@@ -181,9 +181,10 @@ function assignTaskToTeamMember(Event) {
     // Check if the assignment has already been registered
     // if false: add "this specific assigned task" to localStorage
     // if true: Warn the user that the task has already been assigned to that member
-   if (!alreadyRegistered(this.assignedTask, assignedTaskList)) {
+   if (!alreadyRegistered(this.assignedTask, assignedTaskList) && Event.target.value != "") {
         assignedTaskList.push(this.assignedTask);
-        localStorage.setItem('assignedTaskList', JSON.stringify(assignedTaskList));        
+        localStorage.setItem('assignedTaskList', JSON.stringify(assignedTaskList));
+        listAssignedTasks();        
     }
 }
 

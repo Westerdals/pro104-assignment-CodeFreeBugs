@@ -70,7 +70,7 @@ body *:nth-child(n) {
     background: purple;
 }
 
-.input {
-    width: 10rem;
+.input, datalist {
+    width: 40rem;
     height: auto;
 }
