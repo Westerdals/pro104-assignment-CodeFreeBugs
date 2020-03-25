@@ -7,11 +7,11 @@
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
-        <div id="main-container">
-        <div class="leftSideBar"></div>
+        <div class="contentContainer" id="main-container">
+        <div class="sideBar leftSideBar"></div>
             <header id="main-header" class="header">
                 <h1 class="headline">NET</h1>
-                <sub>(Not-Enough-ToDo)</sub>
+                <p>(Not-Enough-ToDo)</p>
                 <h3 class="headline">The ultimate task handler</h3>
             </header>
             <form class="form">
@@ -34,16 +34,20 @@
                     <input class="submit" type="submit" value="Assign task to teammember">
                 </div>
             </form>
-            <div id="team-members-div" class="list">
-                <h2 name="teamMembersHeader">Team medlemmer</h2>
-            </div>
-            <div id="tasks-div" class="list">
-                <h2 name="tasks">Arbeidsoppgaver</h2>
-            </div>
-            <div id="current-task-div" class="list">
-                <h2 name="assignedTasks">Tildelte arbeidsoppgaver</h2>
-            </div>
-        <div class="rightSideBar"></div>
+            
+            <section class="section outputList">
+                <div id="team-members-div" class="list">
+                    <h2 name="teamMembersHeader">Team medlemmer</h2>
+                </div>
+                <div id="tasks-div" class="list">
+                    <h2 name="tasks">Arbeidsoppgaver</h2>
+                </div>
+                <div id="current-task-div" class="list">
+                    <h2 name="assignedTasks">Tildelte arbeidsoppgaver</h2>
+                </div>
+            </section>
+        <div class="sideBar rightSideBar"></div>
+        <footer class="footer"></footer>
         </div>
     <script src="script.js"></script>
     </body>

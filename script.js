@@ -222,8 +222,8 @@ function alreadyRegistered(entity, list) {
 
     // Fetch the list(s) with teamMembers and tasks from localStorage
     // We need to do this since the "list of things"-values and "the thing"-values will not be compared as expected
-    const teamList = fetchListFromLocalStorage(localStorage.teamMemberList) ?? [];
-    const taskList = fetchListFromLocalStorage(undefined,localStorage.taskList) ?? [];
+    const teamList = fetchListFromLocalStorage(localStorage.teamMemberList);
+    const taskList = fetchListFromLocalStorage(undefined,localStorage.taskList);
 
     // NB: This is done to make the "list of things" recognize "who it is" (more details later)
     // The properties of the list(s) are stored into separate arrays (i.e: [0, 1, length]) 

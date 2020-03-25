@@ -14,83 +14,60 @@ body {
     background: rgba(0, 0, 0, 0.7);
 }
 
-.leftSideBar {
-    background: orange;
+body *:nth-child(n) {
+    gap: .5rem 0rem;
 }
 
-.rightSideBar {
-    background: orange;
-}
-
-#main-container{
-    margin: 2rem auto;
-    width: 100rem;
-    height: 50rem;
+.contentContainer{
+    height: 100vh;
     display: grid;
-    grid-auto-columns: 5rem auto;
-    grid-auto-rows: 2rem auto;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: 2rem repeat(3, minmax(2rem, 1fr)) 2rem;
+    grid-template-rows: 2rem repeat(3, minmax(2rem, 1fr)) 2rem;
+    grid-template-areas:
+        "leftSideBar . . . rightSideBar"
+        "leftSideBar mainHeader mainHeader mainHeader rightSideBar"
+        "leftSideBar form form form rightSideBar"
+        "leftSideBar outputList outputList outputList rightSideBar"
+        "leftSideBar footer footer footer rightSideBar";
+
     border: 1px rgb(148, 148, 148) dashed;
     background: rgba(40,94,229,0.7);
     color: rgb(255,255,255);
 }
 
-#main-container .leftSideBar {
-    grid-column: 1/1;
-    grid-row: 1/-1;
+.contentContainer .leftSideBar {
+    grid-area: leftSideBar;
+    background: orange;
 }
 
-#main-container .header {
+.contentContainer .header {
     display: grid;
-    grid-template-rows: 4rem;
-    grid-template-columns: 1fr;
-    grid-column: 3/3;
-    justify-items: center;
+    grid-area: mainHeader;
+    place-items: center;
 }
 
-#main-container .form {
+.contentContainer .form {
     display: grid;
-    justify-content: center;
-    grid-column: 2 / span 3;
-    grid-row: 2/2;
-    gap: .5rem 2rem;
+    grid-area: form;
+    place-items: center;
+    grid-auto-flow: column;
 }
 
-.form #register-team-member-div {
-    grid-column: 2/2;
-}
-
-.form #register-task-div {
-    grid-column: 3/3;
-}
-
-.form .registerAssignedTask {
-    grid-column: 4/4;
-}
-
-#main-container .list {
+.contentContainer .outputList {
     display: grid;
-    justify-content: center;
-    grid-column: 2/ span 2;
-    grid-row: 3/3;
+    grid-area: outputList;
+    place-items: center;
+    grid-auto-flow: column;
 }
 
-#main-container #team-members-div {
-    grid-column: 2/2;
+.contentContainer .rightSideBar {
+    grid-area: rightSideBar;
+    background: orange;
 }
 
-#main-container #tasks-div {
-    grid-column: 3/3;
-}
-
-#main-container #current-task-div {
-    grid-column: 4/4;
-}
-
-#main-container .rightSideBar {
-    grid-column: 5/5;
-    grid-row: 1/-1;    
+.contentContainer .footer {
+    grid-area: footer;
+    background: purple;
 }
 
 .input {
