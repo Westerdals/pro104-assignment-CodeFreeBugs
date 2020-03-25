@@ -70,15 +70,13 @@ function createTeamMember() {
     // Another great thing is, it proves that the same member that gets registered is the same that recives a task later
     const id = Math.floor(Math.random() * 100 + 1);
 
-    if (memberName != "") {
-        // Store the values into "this.member"-object 
-        this.member = {memberName, id};
-    }
-
+    // Store the values into "this.member"-object 
+    this.member = {memberName, id};
+    
     // Calling function "alreadyRegistered", that takes in a "thing" we want to check and the list to check against
     // It returns false if the "thing" is already in the "list", and returns true if it's not already in the list
     // After that the "listTeamMembers"-function gets called
-    if (!alreadyRegistered(this.member, teamMemberList)) {
+    if (!alreadyRegistered(this.member, teamMemberList) && memberName != "") {
         teamMemberList.push(this.member);
         localStorage.setItem('teamMemberList', JSON.stringify(teamMemberList));
         listTeamMembers();
